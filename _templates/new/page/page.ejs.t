@@ -3,7 +3,6 @@ to: "src/pages/<%= h.inflection.dasherize(package[0]) %>/<%= h.inflection.dasher
 ---
 <template>
   <div class="<%= h.inflection.dasherize(name) %>">
-    <navigation-bar title="<%=  h.inflection.dasherize(title) %>"></navigation-bar>
     <%= h.inflection.dasherize(name) %>
   </div>
 </template>
@@ -11,15 +10,11 @@ to: "src/pages/<%= h.inflection.dasherize(package[0]) %>/<%= h.inflection.dasher
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   // import API from '@api'
-  import NavigationBar from '@components/navigation-bar/navigation-bar'
 
   const PAGE_NAME = '<%=  h.inflection.dasherize(name).toUpperCase().replace(/-/g, '_')%>'
 
   export default {
     name: PAGE_NAME,
-    components: {
-      NavigationBar
-    },
     data() {
       return {
       }
@@ -28,7 +23,7 @@ to: "src/pages/<%= h.inflection.dasherize(package[0]) %>/<%= h.inflection.dasher
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "~@design"
+  /*@import "~@design"*/
 
   .<%= h.inflection.dasherize(name) %>
     width: 100%

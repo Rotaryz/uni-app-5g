@@ -1,10 +1,19 @@
 {
   "pages": [
-    "pages/mine",
-    "pages/index"
+    {
+      "path": "pages/main/mine/mine",
+      "style": {
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/main/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    }
   ],
   "subPackages": [
-    "todo"
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

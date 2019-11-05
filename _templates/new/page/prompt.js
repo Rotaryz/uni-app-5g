@@ -1,20 +1,22 @@
 const appJson = require('../../../src/pages.json')
 const MAIN_PACKAGE = 'main'
 const choices = []
-
+let pageName = []
 // 存在分包时
-if (appJson.subPackages && appJson.subPackages.length > 1) {
+if (appJson.subPackages && appJson.subPackages.length > 0) {
   appJson.subPackages.forEach((item) => {
     const packageName = item.root.replace(/\//g, '')
     item.pages.unshift('' + packageName)
     choices.push({message: packageName, value: item.pages})
   })
 }
+appJson.pages.forEach((item) => {
+  item.path && pageName.push(item.path)
+})
 
+pageName.unshift(MAIN_PACKAGE)
 // 首个插入main包
-appJson.pages.unshift(MAIN_PACKAGE)
-choices.unshift({message: MAIN_PACKAGE, value:  appJson.pages})
-console.log(choices)
+choices.unshift({message: MAIN_PACKAGE, value: pageName})
 module.exports = [
   {
     type: 'select',

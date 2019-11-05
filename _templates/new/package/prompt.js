@@ -13,7 +13,7 @@ module.exports = [
       if (/(-|_|\n|\s|\+|=)/g.test(value)) {
         return '分包名称不能使用-_+=等连词'
       }
-      if (appJson.subPackages && appJson.subPackages.length > 1) {
+      if (appJson.subPackages && appJson.subPackages.length > 0) {
         let flag = appJson.subPackages.some((item) => {
           let reg = new RegExp(value)
           return reg.test(item.root) || MAIN_PACKAGE === value
