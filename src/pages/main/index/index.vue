@@ -15,6 +15,9 @@
     data() {
       return {
       }
+    },
+    onLoad() {
+      console.log(process.env)
     }
   }
 </script>

@@ -5,8 +5,8 @@ const MAIN = '/pages'
 export default {
   main: {
     PACKAGE: MAIN,
-    INDEX:`${MAIN}/index`,
-    MINE:`${MAIN}/mine`,
+    INDEX: `${MAIN}/index`,
+    MINE: `${MAIN}/mine`,
     // main
   }
 }
