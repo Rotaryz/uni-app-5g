@@ -3,6 +3,7 @@ import App from './App'
 import 'utils/http-handler'
 import API from './api/index'
 import './design/variable.styl'
+import API from './api'
 
 Vue.config.productionTip = false
 Vue.prototype.API = API
@@ -12,4 +13,3 @@ const app = new Vue({
 })
 app.$mount()
 console.warn(process.env.VUE_APP_ENV, VERSION)
-
