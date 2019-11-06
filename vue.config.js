@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+// const chalk = require('chalk')
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
 // console.log(process.argv)
