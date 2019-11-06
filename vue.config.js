@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+// const chalk = require('chalk')
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
 // console.log(process.argv)
@@ -9,7 +9,7 @@ function infoVersion(arr, type) {
     // 获取参数
     switch (type) {
       case VERSION_NAME:
-        if (item.includes('--v')) value = item.slice(2)
+        if (item.includes('--v')) value = '/' + item.slice(2)
         break
       default:
         value = ''
@@ -37,21 +37,20 @@ var definePlugin = new webpack.DefinePlugin({
 })
 
 module.exports = {
-  configureWebpack: { // 第三方插件配置
-    plugins: [
-      definePlugin
-    ]
-  },
   css: {
     loaderOptions: {
       // 给 stylus-loader 传递选项
       stylus: {
         import: [
           '~@/design/variable.styl',
-          '~@/design/base.styl',
           '~@/design/mixin.styl'
         ]
       }
     }
+  },
+  configureWebpack: { // 第三方插件配置
+    plugins: [
+      definePlugin
+    ]
   }
 }

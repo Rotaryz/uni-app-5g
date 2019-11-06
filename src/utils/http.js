@@ -15,7 +15,8 @@ class HTTP {
       // baseUrl: process.env.VUE_APP_API,
       header: {
         'Authorization': uni.getStorageSync('token') || '27daa2f3a3de5548f6edc1a9392de6e3ccb8826e',
-        'Current-Shop': uni.getStorageSync('shopId') || '1'
+        'Current-Shop': uni.getStorageSync('shopId') || '1',
+        'Mini-program':uni.getStorageSync('provider') || 'weixin'
       }
     }
   }
@@ -27,7 +28,7 @@ class HTTP {
       this.callback.beforeRequest(args)
     }
     // 设置请求路由
-    url = `${this.config.baseUrl}/${VERSION}${url}`
+    url = `${this.config.baseUrl}${VERSION}${url}`
     let option = Object.assign({}, this.config, {url, data: data || {}, method})
     let that = this
     return new Promise((resolve, reject) => {
