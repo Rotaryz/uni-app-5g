@@ -6,6 +6,7 @@
 				"navigationBarTitleText": "首页"
 			}
 		},
+		"todo",
 		{
 			"path": "pages/main/category/category",
 			"style": {
@@ -54,12 +55,6 @@
 				"iconPath": "static/tabs/icon-gift.png",
 				"selectedIconPath": "static/tabs/icon-gift_pressed.png",
 				"text": "商城"
-			},
-			{
-				"pagePath": "pages/main/index/index",
-				"iconPath": "static/tabs/icon-shop.png",
-				"selectedIconPath": "static/tabs/icon-shop_pressed.png",
-				"text": "门店"
 			},
 			{
 				"pagePath": "pages/main/mine/mine",
