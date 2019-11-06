@@ -1,5 +1,5 @@
 <script>
-    import {getProvider, getCode, getSetting} from './utils/login.js'
+    import {getProvider, getCode} from './utils/login.js'
     import { globalMethods } from '@/state/helpers'
 
     export default {
@@ -8,8 +8,9 @@
         },
         async onLaunch() {
             //获取服务商信息
-            let provider = await getProvider()
-            uni.setStorageSync('provider', provider[0])
+          let provider = await getProvider()
+          this.$storage("provider", provider[0])
+          this.silenceLogin()
         },
         onShow() {
         },
@@ -17,7 +18,11 @@
             console.log('App Hide')
         },
         methods:{
-            ...globalMethods
+          async silenceLogin() {
+            // 初始化获取静默授权
+            let code = await getCode(this.$storage("provider"))
+            this._login(code)
+          },
         }
     }
 </script>

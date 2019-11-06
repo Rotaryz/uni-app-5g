@@ -16,7 +16,7 @@ class HTTP {
       header: {
         'Authorization': uni.getStorageSync('token') || '27daa2f3a3de5548f6edc1a9392de6e3ccb8826e',
         'Current-Shop': uni.getStorageSync('shopId') || '1',
-        'Mini-program':uni.getStorageSync('provider') || 'weixin'
+        'Mini-program':'swan'|| uni.getStorageSync('provider') || 'wx'
       }
     }
   }

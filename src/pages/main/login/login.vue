@@ -9,7 +9,7 @@
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
                 </button>
-                <button class="login-btn" type="primary" open-type="getUserInfo" @getuserinfo="getuserinfo" v-else>
+                <button class="login-btn" type="primary" open-type="getUserInfo" @getuserinfo="_loginTo" v-else>
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
                 </button>
@@ -19,94 +19,93 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {getProvider, getCode, getSetting} from "@/utils/login.js"
+  import {getCode, getSetting} from "@/utils/login.js"
 
-    // import * as Helpers from './helpers'
-    // import API from '@api'
-    const PAGE_NAME = "LOGIN"
-    export default {
-        name: PAGE_NAME,
-        data() {
-            return {
-                code: "",
-                status: 0 //2未操作 1已经授权  0拒绝授权
-            }
-        },
-        onLoad() {
+  // import * as Helpers from './helpers'
+  // import API from '@api'
+  const PAGE_NAME = "LOGIN"
+  export default {
+    name: PAGE_NAME,
+    data() {
+      return {
+        e:{},
+        loginTime: 3,
+        code: "",
+        status: 0 //2未操作 1已经授权  0拒绝授权
+      }
+    },
+    onLoad() {
 
-        },
-        async onShow() {
-            //获取授权状态
-            this.status = await getSetting()
-
-            let provider = await getProvider()
-            //获取code
-            this.code = await getCode(provider[0])
-        },
-        methods: {
-            getFormId(e) {
-                conosle.log(e)
-                this.formId = e.uni.detail.formId
-            },
-            // 获取用户信息
-            getuserinfo(e) {
-                if (!this.code) {
-                    uni.showToast({
-                        icon: "none",
-                        title: "正在加载中，稍等一下",
-                        duration: 2000
-                    });
-                    return
-                }
-                if (e.detail && e.detail.errMsg == "getUserInfo:ok") {
-                    e.detail.code = this.code//add code
-                    this.$API.Login.getToken(e.detail).then(res => {
-                        uni.setStorageSync("userInfo", data.customer_info)
-                        uni.setStorageSync("token", data.access_token)
-                        //授权成功之后的回调
-                        uni.showToast({
-                            title: "获取用户信息成功",
-                            duration: 2000
-                        })
-
-                        setTimeout(() => {
-                            uni.redirectTo({
-                                url: "/pages/index/index"
-                            })
-                        }, 2000)
-                    })
-                } else {
-                    //授权成功之后的回调
-                    uni.showToast({
-                        icon: "none",
-                        title: "已拒绝授权",
-                        duration: 2000
-                    });
-                    //用户拒绝授权
-                    this.status = 0
-                }
-            },
-            // 设置授权
-            openSetting() {
-                uni.showModal({
-                    title: "提示",
-                    content: "你已经取消过授权，需设置授权权限",
-                    confirmText: "设置",
-                    success: function (res) {
-                        if (res.confirm) {
-                            uni.openSetting({
-                                success(res) {
-
-                                }
-                            })
-                        } else if (res.cancel) {
-                            console.log("用户点击取消")
-                        }
-                    }
-                });
-            }
+    },
+    async onShow() {
+      //获取授权状态
+      this.status = await getSetting()
+      //获取code
+      this.code = await getCode(this.$storage("provider"))
+    },
+    methods: {
+      getFormId(e) {
+        this.formId = e.uni.detail.formId
+      },
+      // 获取用户信息
+      _loginTo(e) {
+        if (this.loginTime <= 0) {
+          return
         }
+        if (!this.code) {
+          uni.showToast({
+            icon: "none",
+            title: "正在加载中，稍等一下",
+            duration: 2000
+          });
+          return
+        }
+        if (e.detail && e.detail.errMsg == "getUserInfo:ok") {
+          this._login(this.code,e).then(res=>{
+            uni.showToast({
+              title: "获取用户信息成功",
+              duration: 2000
+            })
+            setTimeout(() => {
+              uni.redirectTo({
+                url: this.$routes.main.INDEX
+              })
+            }, 2000)
+          }).catch(async (err) => {
+            this.code = await getCode(this.$storage("provider"))
+            this._login(this.code,e)
+          })
+        } else {
+          uni.showToast({
+            icon: "none",
+            title: "已拒绝授权",
+            duration: 2000
+          });
+          //用户拒绝授权
+          this.status = 0
+        }
+      },
+      // 设置授权
+      openSetting() {
+        uni.showModal({
+          title: "提示",
+          content: "你已经取消过授权，需设置授权权限",
+          confirmText: "设置",
+          success: function (res) {
+            if (res.confirm) {
+              uni.openSetting({
+                success(res) {
+
+                }
+              })
+            } else if (res.cancel) {
+              console.log("用户点击取消")
+            }
+          }
+        });
+      }
     }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
