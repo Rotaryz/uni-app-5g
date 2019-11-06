@@ -11,6 +11,19 @@
       "style": {
         "navigationBarTitleText": "首页"
       }
+    },
+    {
+      "path": "pages/main/goods-detail/goods-detail",
+      "style": {
+        "navigationBarTitleText": "商品详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/main/submit-order/submit-order",
+      "style": {
+        "navigationBarTitleText": "提交订单"
+      }
     }
   ],
   "subPackages": [
