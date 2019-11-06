@@ -1,17 +1,22 @@
 <script>
-  export default {
-    onLaunch: function () {
-      console.log('App Launch')
-    },
-    onShow: function () {
-      console.log('App Show')
-    },
-    onHide: function () {
-      console.log('App Hide')
+    export default {
+        data: {
+            title: 0
+        },
+        onLaunch() {
+        },
+        onShow() {
+        },
+        onHide: function () {
+            console.log('App Hide')
+        }
     }
-  }
 </script>
 
-<style>
-    /*每个页面公共css */
+<style lang="stylus" rel="stylesheet/stylus">
+    /*--公共样式--*/
+    @import "./design/base.styl"
+    @import "./design/variable.styl"
+
+
 </style>
