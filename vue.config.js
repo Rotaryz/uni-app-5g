@@ -29,7 +29,6 @@ let obj = {
     platform: process.env.VUE_APP_PLATFORM,
     env: process.env.VUE_APP_ENV
 }
-console.log('环境配置', obj)
 
 // 第三方插件
 var definePlugin = new webpack.DefinePlugin({
@@ -54,4 +53,5 @@ module.exports = {
             }
         }
     }
+
 }

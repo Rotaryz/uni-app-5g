@@ -1,4 +1,4 @@
-// import request from '@utils/http'
+import request from '../utils/http'
 
 export default {
   /**
@@ -7,8 +7,8 @@ export default {
    * @param loading
    * @returns {*}
    */
-  // demo(args) {
-  //   const url = ``
-  //   return request.get({ url, ...args })
-  // },
+  demo(args) {
+    const url = `/customer/content/module/page`
+    return request.get({url, ...args})
+  },
 }
