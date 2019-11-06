@@ -19,25 +19,26 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {getProvider, getCode, getSetting} from './login.js'
-let login
-    console.log(getSetting)
+    import {getProvider, getCode, getSetting} from "@/utils/login.js"
 
     // import * as Helpers from './helpers'
     // import API from '@api'
-    const PAGE_NAME = 'LOGIN'
+    const PAGE_NAME = "LOGIN"
     export default {
         name: PAGE_NAME,
         data() {
             return {
-                code: '',
+                code: "",
                 status: 0 //2未操作 1已经授权  0拒绝授权
             }
+        },
+        onLoad() {
+
         },
         async onShow() {
             //获取授权状态
             this.status = await getSetting()
-            //获取服务商信息
+
             let provider = await getProvider()
             //获取code
             this.code = await getCode(provider[0])
@@ -51,33 +52,34 @@ let login
             getuserinfo(e) {
                 if (!this.code) {
                     uni.showToast({
-                        icon: 'none',
-                        title: '正在加载中，稍等一下',
+                        icon: "none",
+                        title: "正在加载中，稍等一下",
                         duration: 2000
                     });
                     return
                 }
-                if (e.detail && e.detail.errMsg == 'getUserInfo:ok') {
+                if (e.detail && e.detail.errMsg == "getUserInfo:ok") {
                     e.detail.code = this.code//add code
-                    this.API.Login.getToken(e.detail).then( res => {
-                        console.log(res)
+                    this.$API.Login.getToken(e.detail).then(res => {
+                        uni.setStorageSync("userInfo", data.customer_info)
+                        uni.setStorageSync("token", data.access_token)
                         //授权成功之后的回调
                         uni.showToast({
-                            title: '获取用户信息成功',
+                            title: "获取用户信息成功",
                             duration: 2000
-                        });
+                        })
 
                         setTimeout(() => {
                             uni.redirectTo({
-                                url: '/pages/index/index'
-                            });
+                                url: "/pages/index/index"
+                            })
                         }, 2000)
                     })
                 } else {
                     //授权成功之后的回调
                     uni.showToast({
-                        icon: 'none',
-                        title: '已拒绝授权',
+                        icon: "none",
+                        title: "已拒绝授权",
                         duration: 2000
                     });
                     //用户拒绝授权
@@ -87,9 +89,9 @@ let login
             // 设置授权
             openSetting() {
                 uni.showModal({
-                    title: '提示',
-                    content: '你已经取消过授权，需设置授权权限',
-                    confirmText: '设置',
+                    title: "提示",
+                    content: "你已经取消过授权，需设置授权权限",
+                    confirmText: "设置",
                     success: function (res) {
                         if (res.confirm) {
                             uni.openSetting({
@@ -98,7 +100,7 @@ let login
                                 }
                             })
                         } else if (res.cancel) {
-                            console.log('用户点击取消');
+                            console.log("用户点击取消")
                         }
                     }
                 });
@@ -126,17 +128,20 @@ let login
         align-items: center
         justify-content: center
         padding-top: 18.2vh
+
         .login-img
             position: relative
             z-index: 10
             height: 88px
             width: @height
+
         .login-name
             position: relative
             z-index: 10
             width: 102.1px
             margin-top: 20.5px
             height: 20.85px
+
         .login-btn
             display: flex
             padding: 0
@@ -148,14 +153,17 @@ let login
             border-radius: 22.5px
             transition: all 0.3s
             background: $color-main
+
             .wx-logo
                 width: 20px
                 height: 20px
                 margin-right: 8px
+
             .title
                 font-size: $font-size-16
                 color: $color-white
                 font-family: $font-family-regular
+
             &:after
                 border: none
 
@@ -168,6 +176,7 @@ let login
         left: 0
         bottom: 0
         right: 0
+
         .popup-content
             display: flex
             flex-direction: column
@@ -177,16 +186,19 @@ let login
             margin: 0 auto
             width: 80vw
             background: $color-white
+
             .popup-title
                 font-family: $font-family-medium
                 color: $color-text-main
                 font-size: $font-size-16
                 padding: 25px 0
+
             .popup-tip
                 font-family: $font-family-regular
                 color: $color-text-main
                 font-size: $font-size-16
                 padding: 10px 0
+
             .popup-btn
                 border-radius: 20px
                 line-height: 32px

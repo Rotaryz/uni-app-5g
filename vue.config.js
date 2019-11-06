@@ -9,7 +9,7 @@ function infoVersion(arr, type) {
     // 获取参数
     switch (type) {
       case VERSION_NAME:
-        if (item.includes('--v')) value = item.slice(2)
+        if (item.includes('--v')) value = '/' + item.slice(2)
         break
       default:
         value = ''
@@ -43,7 +43,6 @@ module.exports = {
       stylus: {
         import: [
           '~@/design/variable.styl',
-          '~@/design/base.styl',
           '~@/design/mixin.styl'
         ]
       }
