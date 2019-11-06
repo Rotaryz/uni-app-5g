@@ -43,7 +43,7 @@ HTTP.setCallback({
       if (typeof doctor === 'function') {
         doctor(res, url)
       } else {
-        throw res
+        return res
       }
     }
     return res
