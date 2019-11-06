@@ -27,7 +27,7 @@ class HTTP {
       this.callback.beforeRequest(args)
     }
     // 设置请求路由
-    url = `${this.config.baseUrl}/${VERSION}${url}`
+    url = `${this.config.baseUrl}${VERSION}${url}`
     let option = Object.assign({}, this.config, {url, data: data || {}, method})
     let that = this
     return new Promise((resolve, reject) => {
