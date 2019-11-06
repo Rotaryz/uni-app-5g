@@ -25,13 +25,14 @@
         .catch((err) => {
           console.log(err, '5454')
         })
-      // let res = this.$API.Good.demo({
+      // let res = await this.$API.Good.demo({
       //   data: {code: 'customer_index'},
       //   doctor(res) {
       //     console.log(res.message)
       //   }
       // })
       // console.log(res)
+      // console.log('sdfsd')
     }
   }
 </script>
