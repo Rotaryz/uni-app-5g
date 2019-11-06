@@ -1,15 +1,16 @@
 {
   "pages": [
     {
-      "path": "pages/main/mine/mine",
-      "style": {
-        "navigationBarTitleText": "个人中心"
-      }
-    },
-    {
       "path": "pages/main/index/index",
       "style": {
         "navigationBarTitleText": "首页"
+      }
+    },
+    "todo",
+    {
+      "path": "pages/main/mine/mine",
+      "style": {
+        "navigationBarTitleText": "我的"
       }
     },
     {

@@ -1,8 +1,7 @@
 ---
 to: "src/pages.json"
 inject: true
-after: <%= package[0]==='main'?'pages':''  %>
-
+after: <%= package[0]==='main'? '' + pageMsg:''  %>
 ---
 <%_ if (package[0]==='main') { _%>
     {
@@ -10,7 +9,5 @@ after: <%= package[0]==='main'?'pages':''  %>
       "style": {
          "navigationBarTitleText": "<%= title _%>"
       }
-     },
-     <%_
-    } else { _%>
+     }<%= pageMsg === 'pages' ? ',' : '' %> <%_} else { _%>
         ,<%_ } _%>
