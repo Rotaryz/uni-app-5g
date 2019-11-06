@@ -1,16 +1,3 @@
-css: {
-    loaderOptions: {
-        // 给 stylus-loader 传递选项
-        stylus: {
-        import:
-            [
-                '~@/design/variable.styl',
-                '~@/design/base.styl',
-                '~@/design/mixin.styl'
-            ]
-        }
-    }
-}
 const chalk = require('chalk')
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
