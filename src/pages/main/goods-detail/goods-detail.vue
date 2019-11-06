@@ -1,6 +1,5 @@
 <template>
   <div class="goods-detail">
-    <navigation-bar ref="navigationBar" :translucent="false" :title="detail.name || '商品详情'"></navigation-bar>
     <swiper class="banner-swiper">
       <swiper-item v-for="(item, index) in detail.goods_banner_images" :key="index">
         <img src="./image.jpg" alt="" mode="aspectFill" class="banner-image">
@@ -12,14 +11,12 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   // import API from '@api'
-  import NavigationBar from '@/components/navigation-bar/navigation-bar'
 
   const PAGE_NAME = 'GOODS_DETAIL'
 
   export default {
     name: PAGE_NAME,
     components: {
-      NavigationBar
     },
     data() {
       return {
