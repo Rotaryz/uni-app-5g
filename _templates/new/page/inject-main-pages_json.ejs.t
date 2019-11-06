@@ -9,5 +9,5 @@ after: <%= package[0]==='main'? '' + pageMsg:''  %>
       "style": {
          "navigationBarTitleText": "<%= title _%>"
       }
-     }, else { _%>
+     }, <%_} else { _%>
         ,<%_ } _%>
