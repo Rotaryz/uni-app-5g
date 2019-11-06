@@ -59,7 +59,7 @@
   },
   "mp-weixin": {
     /* 微信小程序特有相关 */
-    "appid": "",
+    "appid": "wxbebabb5eb8a0b7b3",
     "setting": {
       "urlCheck": false
     },
@@ -69,6 +69,7 @@
     "usingComponents": true
   },
   "mp-baidu": {
+    "appid": "17473146",
     "usingComponents": true
   },
   "mp-toutiao": {
