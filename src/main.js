@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App'
 import 'utils/http-handler'
-import API from './api/index'
 import './design/variable.styl'
 import API from './api'
 
