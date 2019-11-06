@@ -25,13 +25,13 @@
       //   .catch((err) => {
       //     console.log(err, '5454')
       //   })
-      let res = await API.Good.demo({
-        data: {code: 'customer_index'},
-        doctor(res) {
-          // console.log(res)
-        }
-      })
-      console.log(res)
+      // let res = await API.Good.demo({
+      //   data: {code: 'customer_index'},
+      //   doctor(res) {
+      //     // console.log(res)
+      //   }
+      // })
+      // console.log(res)
       // console.log(VERSION)
       // console.log(BROWSER_SUPPORTS_HTML5)
     }
