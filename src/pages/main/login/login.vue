@@ -19,16 +19,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {getProvider, getCode, getSetting} from '@/utils/login.js'
+    import {getProvider, getCode, getSetting} from "@/utils/login.js"
 
     // import * as Helpers from './helpers'
     // import API from '@api'
-    const PAGE_NAME = 'LOGIN'
+    const PAGE_NAME = "LOGIN"
     export default {
         name: PAGE_NAME,
         data() {
             return {
-                code: '',
+                code: "",
                 status: 0 //2未操作 1已经授权  0拒绝授权
             }
         },
@@ -52,34 +52,34 @@
             getuserinfo(e) {
                 if (!this.code) {
                     uni.showToast({
-                        icon: 'none',
-                        title: '正在加载中，稍等一下',
+                        icon: "none",
+                        title: "正在加载中，稍等一下",
                         duration: 2000
                     });
                     return
                 }
-                if (e.detail && e.detail.errMsg == 'getUserInfo:ok') {
+                if (e.detail && e.detail.errMsg == "getUserInfo:ok") {
                     e.detail.code = this.code//add code
-                    this.API.Login.getToken(e.detail).then(res => {
-                        uni.setStorageSync('userInfo', data.customer_info)
-                        uni.setStorageSync('token', data.access_token)
+                    this.$API.Login.getToken(e.detail).then(res => {
+                        uni.setStorageSync("userInfo", data.customer_info)
+                        uni.setStorageSync("token", data.access_token)
                         //授权成功之后的回调
                         uni.showToast({
-                            title: '获取用户信息成功',
+                            title: "获取用户信息成功",
                             duration: 2000
                         })
 
                         setTimeout(() => {
                             uni.redirectTo({
-                                url: '/pages/index/index'
+                                url: "/pages/index/index"
                             })
                         }, 2000)
                     })
                 } else {
                     //授权成功之后的回调
                     uni.showToast({
-                        icon: 'none',
-                        title: '已拒绝授权',
+                        icon: "none",
+                        title: "已拒绝授权",
                         duration: 2000
                     });
                     //用户拒绝授权
@@ -89,9 +89,9 @@
             // 设置授权
             openSetting() {
                 uni.showModal({
-                    title: '提示',
-                    content: '你已经取消过授权，需设置授权权限',
-                    confirmText: '设置',
+                    title: "提示",
+                    content: "你已经取消过授权，需设置授权权限",
+                    confirmText: "设置",
                     success: function (res) {
                         if (res.confirm) {
                             uni.openSetting({
@@ -100,7 +100,7 @@
                                 }
                             })
                         } else if (res.cancel) {
-                            console.log('用户点击取消');
+                            console.log("用户点击取消")
                         }
                     }
                 });

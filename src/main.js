@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+import '@/utils/app-plugins'
 import 'utils/http-handler'
-import './design/variable.styl'
-import API from './api'
 
 Vue.config.productionTip = false
-Vue.prototype.API = API
 App.mpType = 'app'
 const app = new Vue({
   ...App

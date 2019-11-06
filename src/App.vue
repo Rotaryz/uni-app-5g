@@ -25,7 +25,5 @@
 <style lang="stylus" rel="stylesheet/stylus">
     /*--公共样式--*/
     @import "./design/base.styl"
-    @import "./design/variable.styl"
-
 
 </style>

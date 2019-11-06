@@ -13,13 +13,13 @@ export default {
         //获取code
         // let code = await getCode(provider[0])
         //小程序授权微信
-        let param = {
+        let data = {
             code: e.code,
             encryptedData: e.encryptedData,
             iv: e.iv
         }
         const url = '/customer/customer/auth/post-login'
-         return request.get({ url, ...param })
+         return request.get({ url, data })
     },
     /**
      * 收集formId
