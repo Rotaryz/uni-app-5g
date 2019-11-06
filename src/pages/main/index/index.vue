@@ -14,8 +14,18 @@
     name: PAGE_NAME,
     data() {
       return {
+
       }
-    }
+    },
+	onLoad () {
+	    console.log('index onLoad')
+	},
+    onShow() {
+	    console.log('index Show')
+	},
+    onHide() {
+	    console.log('index Hide')
+	}
   }
 </script>
 
