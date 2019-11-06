@@ -2,7 +2,7 @@
   <view class="shopping-cart">
     <view class="list-con">
       <view v-for="(item) in listData" :key="item.id" class="item">
-        <uni-swipe-action :options="options">
+        <uni-swipe-action :options="options" @click="deleteGoods(item)">
           <view class="item-con">
             <div class="item-left">
               <div v-if="item.saleable && item.status" :class="{checked: item.select}" class="item-checked"
@@ -76,19 +76,31 @@
       return {
         options: [{text: '删除'}],
         listData: [],
-        selectIdArr: {},// 存储勾选的id
+        selectArr: {},// 存储勾选的id
         selectCount: 0,// 勾选数量
-        canSelectCount: 0,// 可以勾选的数量
-        total: {
-          cashPrice: 0,
-          beanPrice: 0
-        }
+        canSelectCount: 0// 可以勾选的数量
       }
     },
     computed: {
       selectAll() {
         // 勾选的数量 = 可以勾选的数量就是全选
         return this.canSelectCount && this.selectCount === this.canSelectCount
+      },
+      total() {
+        if (this.selectCount) {
+          let cashPrice = 0
+          let beanPrice = 0
+          this.listData.map((item) => {
+            if (item.select) {
+              cashPrice += Number(item.goods_spec.cash_price * item.num)
+              beanPrice += Number(item.goods_spec.bean_price * item.num)
+            }
+          })
+          cashPrice = cashPrice.toFixed(2)
+          beanPrice = beanPrice.toFixed(0)
+          return {cashPrice: cashPrice, beanPrice: beanPrice}
+        }
+        return {cashPrice: 0, beanPrice: 0}
       }
     },
     onPullDownRefresh() {
@@ -101,9 +113,13 @@
     methods: {
       _getListData(isRefresh=false) {
         setTimeout(()=>{
+          // 清除勾选计数
+          this.selectCount = 0
+          this.canSelectCount = 0
           // 遍历数组，增加select字段作为勾选判断
           this.listData = shoppingData.shoppingData.map(item => {
-            item.select = !!this.selectIdArr[item.id]
+            item.select = !!this.selectArr[item.id]
+            item.select && this.selectCount++
             // 不是失效商品，可以勾选的数量+1
             if (item.saleable && item.status) {
               this.canSelectCount++
@@ -117,7 +133,7 @@
       checkedGoods(item) {
         if (item.saleable < item.num) return
         item.select = !item.select
-        this.selectIdArr[item.id] = item.select
+        this.selectArr[item.id] = item.select
         this.selectCount = this.selectCount + (item.select ? 1 : -1)
       },
       // 全选
@@ -131,7 +147,7 @@
           // 判断是否为失效商品
           if (item.saleable && item.status) {
             item.select = !this.selectAll
-            this.selectIdArr[item.id] = item.select
+            this.selectArr[item.id] = item.select
           }
         })
         this.selectCount = this.selectAll ? 0 : this.canSelectCount
@@ -140,6 +156,9 @@
       counterFun(item, val) {
         if (item.num <= 1 && val < 0) return
         item.num = item.num + val
+      },
+      // 删除商品
+      deleteGoods(item) {
       },
       // 结算
       settlement() {}

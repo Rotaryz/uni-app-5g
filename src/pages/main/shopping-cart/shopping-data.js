@@ -12,7 +12,7 @@ let shoppingData = [
     "num": 1,
     "sub_total": "20",
     "freight": 10,
-    "goods_spec": {specs_attrs: [{attr_key: '尺码', attr_value: 'M'}], cash_price: 99.9, bean_price: 300},
+    "goods_spec": {specs_attrs: [{attr_key: '尺码', attr_value: 'M'}], cash_price: 199.9, bean_price: 900},
     "logistics_id": 2,
     "logistics_name": "德邦物流",
     "goods_cover_image": "https://exchange-platform-img.jkweixin.com/test%2F2019%2F08%2F15%2F1565859573450-413349"
@@ -47,7 +47,7 @@ let shoppingData = [
     "num": 1,
     "sub_total": "20",
     "freight": 10,
-    "goods_spec": {specs_attrs: [{attr_key: '尺码', attr_value: 'M'}], cash_price: 99.9, bean_price: 300},
+    "goods_spec": {specs_attrs: [{attr_key: '尺码', attr_value: 'M'}], cash_price: 10.0, bean_price: 100},
     "logistics_id": 2,
     "logistics_name": "德邦物流",
     "goods_cover_image": "https://exchange-platform-img.jkweixin.com/test%2F2019%2F08%2F15%2F1565859573450-413349"

@@ -6,7 +6,20 @@
         "navigationBarTitleText": "首页"
       }
     },
-    "todo",
+    {
+     "path": "pages/main/category/category",
+      "style": {
+		"navigationBarTitleText": "分类",
+		"enablePullDownRefresh": true
+      }
+     },
+    {
+     "path": "pages/main/shopping-cart/shopping-cart",
+      "style": {
+		"navigationBarTitleText": "购物车",
+		"enablePullDownRefresh": true
+      }
+     },
 	{
 	  "path": "pages/main/mine/mine",
 	  "style": {
@@ -22,10 +35,38 @@
   ],
   "subPackages": [
   ],
-  "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
-  }
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "兑换商城",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F5F5F9"
+	},
+	"tabBar": {
+		"color": "#979BA5",
+		"selectedColor": "#19B6B4",
+		"fontSize": "10px",
+		"iconWidth": "27px",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/main/index/index",
+				"iconPath": "static/tabs/icon-gift.png",
+				"selectedIconPath": "static/tabs/icon-gift_pressed.png",
+				"text": "商城"
+			},
+			{
+				"pagePath": "pages/main/index/index",
+				"iconPath": "static/tabs/icon-shop.png",
+				"selectedIconPath": "static/tabs/icon-shop_pressed.png",
+				"text": "门店"
+			},
+			{
+				"pagePath": "pages/main/mine/mine",
+				"iconPath": "static/tabs/icon-mine.png",
+				"selectedIconPath": "static/tabs/icon-mine_pressed.png",
+				"text": "我的"
+			}
+		]
+	}
 }
