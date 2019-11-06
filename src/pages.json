@@ -6,7 +6,6 @@
         "navigationBarTitleText": "首页"
       }
     },
-    "todo",
     {
       "path": "pages/main/mine/mine",
       "style": {
@@ -25,7 +24,7 @@
       "style": {
         "navigationBarTitleText": "提交订单"
       }
-    }
+    },
 	{
 	  "path": "pages/main/mine/mine",
 	  "style": {
