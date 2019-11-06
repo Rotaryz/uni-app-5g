@@ -13,7 +13,8 @@
   export default {
     name: PAGE_NAME,
     data() {
-      return {}
+      return {
+      }
     }
   }
 </script>
@@ -22,7 +23,5 @@
   /*@import "~@design"*/
 
   .mine
-    height: 100vh
-    background: #666
     width: 100%
 </style>
