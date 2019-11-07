@@ -8,11 +8,6 @@ export default {
      */
     //登录授权
     getToken(args) {
-        //获取服务商信息
-        // let provider = await getProvider();
-        //获取code
-        // let code = await getCode(provider[0])
-        //小程序授权微信
         const url = '/customer/customer/auth/post-login'
         return request.post({ url, ...args })
     },
@@ -25,5 +20,15 @@ export default {
     getFormId(args) {
         const url = '/customer/customer/customer/collect-formid'
         return request.get({ url, ...args })
-    }
+    },
+    /**
+     * 获取默认店铺ID
+     * @param data
+     * @param loading
+     * @returns {*}
+     */
+    getDefaultShop(args) {
+        const url = `/common/system/system/get-default-shop-id`
+        return request.get({ url, ...args })
+    },
 }
