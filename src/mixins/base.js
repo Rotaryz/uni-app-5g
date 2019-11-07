@@ -1,12 +1,13 @@
-// import {globalComputed} from "@/store/helpers"
+import {globalComputed,globalMethods} from "@/store/helpers.js"
 
 export default {
   computed: {
-    // ...globalComputed
+    ...globalComputed
   },
   onLoad(options) {
   },
   methods: {
+    ...globalMethods,
     // 获取缓存
     $storage(key, val) {
       if (val) uni.setStorageSync(key, val)
@@ -61,13 +62,11 @@ export default {
         let code = await getCode(this.$storage("provider"))
         this._login({data: code}).then(res => {
           if (!res.data.customer_info.is_register) {
-            this.$storage("targetPage", url)
-            uni.reLaunch({url: this.$routes.main.LOGIN})
+            uni.navigateTo({url: this.$routes.main.LOGIN})
             return false
           }
         }).catch(err => {
-          uni.reLaunch({url: that.$routes.uni.LOGIN})
-          this.$storage("targetPage", url)
+          uni.navigateTo({url: that.$routes.uni.LOGIN})
           return false
         })
         return true
