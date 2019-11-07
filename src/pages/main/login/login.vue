@@ -14,7 +14,7 @@
                     <span class="title">授权登录</span>
                     <!-- #endif -->
                 </button>
-                <button class="login-btn" type="primary" open-type="getUserInfo" @getuserinfo="_loginTo" v-else>
+                <button class="login-btn" type="primary" open-type="getUserInfo" form-type="submit" @getuserinfo="_loginTo" v-else>
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">授权登录</span>
                 </button>
@@ -50,7 +50,7 @@
     },
     methods: {
       getFormId(e) {
-        this.formId = e.uni.detail.formId
+        this.formId = e.detail.formId
       },
       // 获取用户信息
       _loginTo(e) {
@@ -67,6 +67,7 @@
         }
         if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
           this._login(this.code,e).then(res=>{
+            this.$API.Login.getFormId({data: {form_ids: [this.formId]}})
             setTimeout(() => {
               uni.redirectTo({
                 url: this.$routes.main.INDEX

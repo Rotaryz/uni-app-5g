@@ -19,7 +19,7 @@ export default {
       if (!token) {
         return
       }
-      let formId = e.uni.detail.formId
+      let formId = e.detail.formId
       this.$API.Login.getFormId({data: {form_ids: [formId]}})
     },
     // 授权登录
