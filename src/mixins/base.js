@@ -1,4 +1,4 @@
-import { globalComputed } from '@/state/helpers'
+import { globalComputed } from '@/store/helpers'
 
 export default {
   computed: {
