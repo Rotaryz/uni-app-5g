@@ -17,5 +17,5 @@ for (const moduleName of Object.keys(modules)) {
     store.dispatch(`${moduleName}/init`)
   }
 }
-
+console.log(11111111111)
 export default store
