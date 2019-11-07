@@ -1,8 +1,8 @@
 <template>
   <div class="category">
-    <scroll-view scroll-x class="category-tab">
+    <scroll-view :scroll-into-view="scrollInto" scroll-x class="category-tab">
       <div class="tab-con none-scrollbar">
-        <view v-for="(item, idx) in categoryTab" :key="item.id" class="tab-item font-regular" :class="{active: idx === tabIndex}" @click="tabTap(idx)">
+        <view v-for="(item, idx) in categoryTab" :key="item.id" :id="'tab'+item.id" class="tab-item font-regular" :class="{active: idx === tabIndex}" @click="tabTap(idx)">
           {{item.name}}
         </view>
         <div :style="{left: (tabIndex)*84+'px'}" class="tab-line"><div class="line"></div></div>
@@ -10,21 +10,21 @@
     </scroll-view>
     <swiper :current="tabIndex" class="swiper-box" :duration="durationTime" @change="changeTab">
       <swiper-item v-for="(tabItem,tabIndex) in categoryTab" :key="tabIndex">
-        <scroll-view :scroll-top="scrollTop" @scroll="scroll" lower-threshold="200" class="list-scroll-content" scroll-y @scrolltolower="_getListData">
+        <scroll-view :scroll-top="scrollTop" lower-threshold="200" class="list-scroll-content" scroll-y @scrolltolower="_getListData">
           <div class="list-content">
             <div v-for="(item, idx) in listData" :key="idx" class="goods-item">
               <div class="goods-con">
                 <img v-if="item.goods_cover_image" :src="item.goods_cover_image" mode="aspectFill" class="goods-img">
-                <p class="title no-wrap font-medium">{{item.name}}</p>
+                <p class="title">{{item.name}}</p>
                 <div class="pay-money middle-big">
                   <span class="money-icon font-regular">¥</span>
-                  <span class="num font-bold">{{item.cash_price}}</span>
+                  <span class="num">{{item.cash_price}}</span>
                   <span class="add-icon font-regular">+</span>
-                  <span class="num font-bold">{{ item.bean_price}}</span>
+                  <span class="num">{{ item.bean_price}}</span>
                   <span class="bean-text font-regular">播豆</span>
                 </div>
                 <div class="price-sale">¥<span class="price-num">{{item.price}}</span></div>
-                <div class="buy-btn font-regular" @click="scrollTop = 0">购买</div>
+                <div class="buy-btn font-regular" @click="goToBuy(item)">购买</div>
               </div>
             </div>
           </div>
@@ -55,12 +55,14 @@
       return {
         categoryTab: CATEGORY,
         tabIndex: 0,
-        listData: [],
         durationTime: 300,
         scrollTop: 0,
+        scrollInto: 'tab0',
         oldScrollTop: 0,
+        listData: [],
         page: 1,
-        hasMore: true
+        hasMore: true,
+        onLoading: false
       }
     },
     onLoad() {
@@ -72,39 +74,51 @@
       this._getListData('', true)
     },
     methods: {
+      initData() {
+        this.page = 1
+        this.hasMore = true
+        this.listData = []
+      },
       _getListData(e, isRefresh = false) {
         if (!this.hasMore) return
+        this.onLoading = true
         e && this.page++
         API.Goods.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
-          this.page === 1 && (this.listData = [])
-          this.listData = [...this.listData, ...res.data]
+          if (this.page === 1) this.listData = []
+          if ([0, 2, 5].includes(this.tabIndex)) this.listData = [...this.listData, ...res.data]
           this.hasMore = res.meta.current_page < res.meta.last_page
           isRefresh&&uni.stopPullDownRefresh()
         })
       },
+      // 顶部分类点击切换
       tabTap(tabIndex) {
+        if(this.tabIndex === tabIndex) return
         // 相邻的才要动画
         if(this.tabIndex === tabIndex + 1 || this.tabIndex === tabIndex - 1) {
           this.durationTime = 300
         } else {
           this.durationTime = 0
         }
-        this.page = 1
         this.tabIndex = tabIndex
-        this._getListData()
+        let scrollIndex = tabIndex < 3 ? 0 : tabIndex - 2
+        this.scrollInto = 'tab' + this.categoryTab[scrollIndex].id
       },
       // swiper切换
       changeTab(e) {
-        // 回到顶部
-        this.scrollTop = this.oldScrollTop
-        this.$nextTick(function() {
-          this.scrollTop = 0
-        })
-        this.tabTap(e.target.current)
+        // // 回到顶部
+        // this.scrollTop = this.oldScrollTop
+        // this.$nextTick(function() {
+        //   this.scrollTop = 0
+        // })
+        this.tabIndex = e.target.current
+        this.initData()
+        this._getListData()
       },
-      scroll: function(e) {
-        this.oldScrollTop = e.detail.scrollTop
-      }
+      // scroll: function(e) {
+      //   this.oldScrollTop = e.detail.scrollTop
+      // },
+      // 购买按钮
+      goToBuy() {}
     }
   }
 </script>
@@ -122,9 +136,9 @@
     background: #ffffff
   .tab-con
     position: relative
-    padding: 0 5px
+    margin: 0 5px
     display: flex
-    border-bottom: 0.5px solid #E8EAEE
+    border-bottom-1px()
     .tab-item
       box-sizing: border-box
       min-width: 84px
@@ -132,7 +146,7 @@
       line-height: 45px
       text-align: center
       font-size: 14px
-      color: #2B2F37
+      color: $color-text-main
       &.active
         font-family: PingFangSC-Medium
         font-size: 16px
@@ -153,8 +167,10 @@
   .swiper-box
     height: calc(100% - 45px)
   .list-scroll-content
+    width: 105%
     height: 100%
   .list-content
+    width: 100vw
     padding: $list-margin 0 $list-margin $list-margin
     display: flex
     flex-wrap: wrap
@@ -178,31 +194,36 @@
           font-size 14px
           line-height 20px
           margin: 7px 10px 9px
-          color: #2B2F37
+          color: $color-text-main
           text-overflow: ellipsis
           overflow: hidden
           white-space: nowrap
+          font-bold()
+          no-wrap()
         .price-sale
           font-size: 11px
-          color: #979BA5
+          color: $color-text-sub
           text-decoration-line line-through
           padding: 7px 10px 19px
         .pay-money
           padding: 0 10px
-          color: #FE7062
+          color: $color-red
           display: flex
           align-items: flex-end
           .money-icon
             font-size: 14px
             line-height: 1
+            transform: translateY(1px)
           .num
             font-size: 16px
             line-height: 1
             transform: translateY(2px)
+            font-bold()
           .add-icon
-            font-size: 16px
+            font-size: 15px
             line-height: 1
             margin:0 1px
+            transform: translateY(1px)
           .bean-text
             font-size: 13px
             line-height: 1
@@ -217,51 +238,9 @@
           font-size: 13px
           text-align: center
           color: #ffffff
-          background: #19B6B4
+          background: $color-main
           border-radius: 2px
 
-  .font-bold
-    font-family: DINAlternate-Bold
   .font-regular
-    font-family: PingFangSC-Regular
-  .font-medium
-    font-family: PingFangSC-Medium
-  .no-wrap
-    text-overflow: ellipsis
-    overflow: hidden
-    white-space: nowrap
-  .none-scrollbar
-    &::-webkit-scrollbar
-      width :0
-      height :0
-      background-color:rgba(0,0,0,0)
-      display:none
-    &::-webkit-scrollbar-button
-      background-color:rgba(0,0,0,0)
-    &::-webkit-scrollbar-track
-      background-color:rgba(0,0,0,0)
-    &::-webkit-scrollbar-track-piece
-      background-color:rgba(0,0,0,0)
-    &::-webkit-scrollbar-thumb
-      background-color:rgba(0,0,0,0)
-    &::-webkit-scrollbar-corner
-      background-color:rgba(0,0,0,0)
-    &::-webkit-scrollbar-resizer
-      background-color:rgba(0,0,0,0)
-    &.-o-scrollbar
-      -moz-appearance: none !important
-      background: rgba(0,255,0,0) !important
-    &::-o-scrollbar-button
-      background-color:rgba(0,0,0,0)
-    &::-o-scrollbar-track
-      background-color:rgba(0,0,0,0)
-    &::-o-scrollbar-track-piece
-      background-color:rgba(0,0,0,0)
-    &::-o-scrollbar-thumb
-      background-color:rgba(0,0,0,0)
-    &::-o-scrollbar-corner
-      background-color:rgba(0,0,0,0)
-    &::-o-scrollbar-resizer
-      background-color:rgba(0,0,0,0)
-
+    font-family: $font-family-regular
 </style>

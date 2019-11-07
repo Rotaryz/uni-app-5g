@@ -61,9 +61,8 @@
 
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
-  // import API from '@api'
   import API from '../../../api'
-  import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
+  import uniSwipeAction from '../../../components/uni-swipe-action/uni-swipe-action.vue'
 
   const PAGE_NAME = 'SHOPPING_CART'
 
@@ -96,7 +95,7 @@
               beanPrice += Number(item.goods_spec.bean_price * item.num)
             }
           })
-          cashPrice = cashPrice.toFixed(2)
+          cashPrice = cashPrice.toFixed(0)
           beanPrice = beanPrice.toFixed(0)
           return {cashPrice: cashPrice, beanPrice: beanPrice}
         }
@@ -128,7 +127,6 @@
       },
       _getListData(isRefresh=false) {
         API.Cart.getList({ data: { limit: 0, page: 1 } }).then(res => {
-          console.log(res.data.list)
           this.setListData(res.data.list)
           isRefresh&&uni.stopPullDownRefresh()
         })
@@ -178,27 +176,7 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   /*@import "~@design"*/
-  // 主色区域
-  $color-main = #19B6B4 // 主颜色
-
-  // 辅助色区域
-  $color-background = #F5F6FA // 背景色
-  $color-line = #E8EAEE // 线条颜色
-  $color-money = #FE7062 // 金额颜色
-  $color-white = #ffffff
-
-  // 文字色区域
-  $color-text-main = #2B2F37 // 主文字色
-  $color-text-sub = #979BA5 // 副文字色
-  $color-text-assist = #C8CACF // 辅助文字颜色
-
-  // 字体
-  $font-family-regular = 'PingFangSC-Regular'
-  $font-family-light = 'PingFangSC-Light'
-  $font-family-medium = 'PingFangSC-Medium'
-
   $height = 20px
-  /* 后面会缩小*/
   $line-width = 14px
   $line-height = 3px
 
@@ -246,7 +224,7 @@
           width: 100%
           color: $color-text-main
           font-size: 14px
-          font-family: $font-family-medium
+          font-bold()
         .specs
           width: 100%
           color: $color-text-sub
@@ -266,10 +244,11 @@
               margin-right:1px
               font-size: 11px
               line-height: 1
+              transform: translateY(1px)
             .num
               font-size: 17px
               line-height: 1
-              font-family: $font-family-medium
+              font-bold()
               transform: translateY(2px)
             .add-icon
               font-size: 17px
@@ -327,7 +306,7 @@
           text-align center
           background-color $color-background
           border-radius 3px
-          font-family: $font-family-medium
+          font-bold()
 
   // 选择框样式
   .item-checked
@@ -336,7 +315,7 @@
     display: inline-block
     position: relative
     box-sizing border-box
-    border: 1px solid $color-text-sub;
+    border: 1px solid $color-text-sub
     border-radius: 50%
     background-color: #fff
     z-index: 1
@@ -375,27 +354,28 @@
           margin-left: 10px
       .pay-money
         margin-top: -3px
-        color: $color-money
+        color: $color-red
         font-family: $font-family-regular
         display: flex
         align-items: flex-end
         .money-icon
           margin-right:1px
-          font-size: 11px
+          font-size: 14px
           line-height: 1
+          transform: translateY(1px)
         .num
-          font-size: 17px
+          font-size: 20px
           line-height: 1
-          font-family: $font-family-medium
+          font-bold()
           transform: translateY(2px)
         .add-icon
-          font-size: 17px
+          font-size: 20px
           line-height: 1
           margin:0 1px
           transform: translateY(2px)
         .bean-text
           line-height: 1
-          font-size: 13px
+          font-size: 15px
           margin-left:2px
     .submit-btn
       height: 40px
