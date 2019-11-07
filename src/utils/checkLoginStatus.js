@@ -26,7 +26,7 @@ const loadLoginState = async function () {
   }
 
   let res = await login(param)
-  if (res.resultCode != '0000') {
+  if (res.resultCode !== '0000') {
     uni.showToast({
       icon: 'none',
       title: res.resultMessage,
@@ -43,7 +43,7 @@ const checkLoginStatus = async function () {
     // 检查 session_key 是否过期
     let status = await check()
     //已过期
-    if (status == 1) {
+    if (status === 1) {
       //小程序登录态刷新
       loadLoginState()
     } else {
@@ -52,7 +52,7 @@ const checkLoginStatus = async function () {
     }
   } else {
     // 无skey，作为首次登录
-    toLogin();
+    toLogin()
   }
 }
 

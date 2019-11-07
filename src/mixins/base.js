@@ -19,7 +19,27 @@ export default {
         return
       }
       let formId = e.uni.detail.formId
-      this.API.Login.getFormId({ data: { form_ids: [formId] }})
+      this.$API.Login.getFormId({ data: { form_ids: [formId] }})
+    },
+    // 授权登录
+    async  _login(code,e){
+      let data = { code: code }
+      if (e) {
+        this.e = e
+        data = {
+          ...data,
+          encrypted_data: e.detail.encryptedData,
+          iv: e.detail.iv
+        }
+      }
+      let res = await this.$API.Login.getToken({
+        data,
+        loading: false,
+        toast: false,
+      })
+      if (res.error_code !== this.$ERR_OK) return res
+      this.$storage('token', res.data.access_token)
+      this.$storage('userInfo', res.data.customer_info)
     },
     // 判断是否需要跳转登录页面
     async $checkToken() {

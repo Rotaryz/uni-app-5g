@@ -7,19 +7,14 @@ export default {
      * @returns {*}
      */
     //登录授权
-    getToken(e) {
+    getToken(args) {
         //获取服务商信息
         // let provider = await getProvider();
         //获取code
         // let code = await getCode(provider[0])
         //小程序授权微信
-        let data = {
-            code: e.code,
-            encryptedData: e.encryptedData,
-            iv: e.iv
-        }
         const url = '/customer/customer/auth/post-login'
-         return request.get({ url, data })
+        return request.post({ url, ...args })
     },
     /**
      * 收集formId
@@ -27,8 +22,8 @@ export default {
      * @param loading
      * @returns {*}
      */
-    getFormId(param) {
+    getFormId(args) {
         const url = '/customer/customer/customer/collect-formid'
-        return request.get({ url, ...param })
+        return request.get({ url, ...args })
     }
 }

@@ -7,7 +7,7 @@ export default {
     PACKAGE: MAIN,
     INDEX: `${MAIN}/index/index`,
     MINE: `${MAIN}/mine/mine`,
-    LOGIN: `${MAIN}/login/login`,
+    LOGIN:`${MAIN}/login/login`,
     SHOPPING_CART: `${MAIN}/shopping-cart`,
     CATEGORY: `${MAIN}/category`,
     // main
