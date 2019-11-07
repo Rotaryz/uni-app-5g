@@ -1,4 +1,4 @@
-import {ERR_NO} from './config'
+import {ERR_NO, ERR_OK} from './config'
 import {hideLoading, showToast, request} from './uni-app'
 
 class HTTP {
@@ -15,8 +15,7 @@ class HTTP {
       // baseUrl: process.env.VUE_APP_API,
       header: {
         'Authorization': uni.getStorageSync('token') || '27daa2f3a3de5548f6edc1a9392de6e3ccb8826e',
-        'Current-Shop': uni.getStorageSync('shopId') || '1',
-        'Mini-program':uni.getStorageSync('provider') || 'weixin'
+        'Current-Shop': uni.getStorageSync('shopId') || '1'
       }
     }
   }
@@ -43,11 +42,12 @@ class HTTP {
             console.error(url + ' <<<<<<接口请求失败>>>>> 异常提示：' + JSON.stringify(res.message))
             return false
           }
+          let result = that.callback.responseFulfilled(res, args)
           // 请求完成后的逻辑处理
-          if (typeof that.callback.responseFulfilled === 'function') {
-            resolve(that.callback.responseFulfilled(res, args))
-          } else {
+          if (typeof result === 'function' || result.error_code === ERR_OK) {
             resolve(res)
+          } else {
+            reject(res)
           }
         },
         fail(err) {

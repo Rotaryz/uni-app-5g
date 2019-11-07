@@ -4,6 +4,7 @@ import {hideLoading, showLoading, showToast} from './uni-app'
 
 HTTP.init(config => {
   config.baseUrl = process.env.VUE_APP_API
+  config.header['Mini-program'] = PLATFORM
 })
 HTTP.setCallback({
   // 请求前处理
@@ -42,8 +43,9 @@ HTTP.setCallback({
       // 错误回调处理 async/await必须传doctor错误处理方法，可以为空方法
       if (typeof doctor === 'function') {
         doctor(res, url)
+        return doctor
       } else {
-        throw res
+        return res
       }
     }
     return res
