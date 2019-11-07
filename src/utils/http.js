@@ -1,4 +1,4 @@
-import {ERR_NO} from './config'
+import {ERR_NO, ERR_OK} from './config'
 import {hideLoading, showToast, request} from './uni-app'
 
 class HTTP {
@@ -45,10 +45,10 @@ class HTTP {
           }
           let result = that.callback.responseFulfilled(res, args)
           // 请求完成后的逻辑处理
-          if (typeof result === 'function') {
-            resolve(result)
+          if (typeof result === 'function' || result.error_code === ERR_OK) {
+            resolve(res)
           } else {
-            reject(result)
+            reject(res)
           }
         },
         fail(err) {
