@@ -107,6 +107,12 @@
       this.winHeight = res.screenHeight
       this.getOrderList(true)
     },
+    computed: {
+      scrollHeight() {
+        let height = this.winHeight - this.statusBarHeight - 45
+        return height
+      }
+    },
     methods: {
       _changeTab() {},
       getOrderList() {}
