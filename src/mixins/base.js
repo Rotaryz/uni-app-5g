@@ -26,7 +26,7 @@ export default {
      *code 静默授权要传
      * encrypted_data，iv 首次登录要传
      */
-    _login (code, e) {
+    _login(code, e) {
       let data = {code: code}
       if (e) {
         data = {
@@ -39,7 +39,7 @@ export default {
         data,
         loading: false,
         toast: false,
-      }).then(res=>{
+      }).then(res => {
         console.log(res)
         if (res.error_code !== this.$ERR_OK) return res
         this.$storage("token", res.data.access_token)
@@ -47,7 +47,7 @@ export default {
         uni.navigateBack({
           delta: 1
         })
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       })
 
@@ -56,25 +56,22 @@ export default {
     async $checkToken() {
       let that = this
       let url = this.$getUrl()
-      /* eslint-disable no-undef */
       let token = this.$storage("token")
       if (!token) {
         let code = await getCode(this.$storage("provider"))
-        this._login({data:code}).then(res=>{
+        this._login({data: code}).then(res => {
           if (!res.data.customer_info.is_register) {
             this.$storage("targetPage", url)
             uni.reLaunch({url: this.$routes.main.LOGIN})
             return false
           }
-        }).catch(err=>{
+        }).catch(err => {
           uni.reLaunch({url: that.$routes.uni.LOGIN})
           this.$storage("targetPage", url)
           return false
         })
         return true
       }
-
-
       // 有token 是否注册
       let userInfo = this.$storage("userInfo")
       if (!userInfo.is_register) {
