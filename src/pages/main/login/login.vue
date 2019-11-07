@@ -6,12 +6,17 @@
             <img class="login-name" src="./pic-zbyp@2x.png">
             <form class="lost" action="" report-submit @submit="getFormId">
                 <button class="login-btn" type="primary" @click="openSetting" v-if="status===0">
+                    <!-- #ifdef MP-WEIXIN -->
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
+                    <!-- #endif -->
+                    <!-- #ifNdef MP-WEIXIN -->
+                    <span class="title">授权登录</span>
+                    <!-- #endif -->
                 </button>
                 <button class="login-btn" type="primary" open-type="getUserInfo" @getuserinfo="_loginTo" v-else>
                     <img src="./icon-wechat@2x.png" class="wx-logo">
-                    <span class="title">微信授权登录</span>
+                    <span class="title">授权登录</span>
                 </button>
             </form>
         </div>
