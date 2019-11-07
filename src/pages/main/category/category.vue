@@ -65,7 +65,7 @@
     methods: {
       _getListData(e, isRefresh = false) {
         e && this.page++
-        API.Good.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
+        API.Goods.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
           this.page === 1 && (this.listData = [])
           this.listData = [...this.listData, ...res.data]
           isRefresh&&uni.stopPullDownRefresh()
