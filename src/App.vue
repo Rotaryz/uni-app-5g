@@ -8,6 +8,7 @@
             //获取服务商信息
           let provider = await getProvider()
           this.$storage("provider", provider[0])
+          this.setProvider(provider[0])
           this.silenceLogin()
         },
         onShow() {

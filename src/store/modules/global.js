@@ -28,5 +28,8 @@ export const actions = {
   },
   setUserInfo({commit, state}, obj) {
     commit('SET_USER_INFO', obj)
+  },
+  setProvider({commit, state}, str) {
+    commit('SET_PROVIDER', str)
   }
 }

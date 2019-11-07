@@ -5,7 +5,8 @@ export const globalComputed = {
 }
 
 export const globalMethods = {
-  ...mapMutations('global', [ 'SET_SYSTEM_INFO']),
+  ...mapActions('global', [ 'setToken','setUserInfo','setProvider']),
+  ...mapMutations('global', [ 'SET_TOKEN','SET_USER_INFO','SET_PROVIDER']),
 }
 
 export const cartComputed = {
