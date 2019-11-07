@@ -115,6 +115,18 @@
     },
     onShow() {
       let address = this.$storage('address')
+      address = {
+        address: "白云区江夏地铁江夏小学对面菜鸟驿站",
+        city: "广州市",
+        country: "中国",
+        customer_id: 23,
+        district: "白云区",
+        id: 44,
+        is_default: 0,
+        mobile: "13584260103",
+        name: "jing",
+        province: "广东省"
+      }
       this._getDefaultAddress(address)
       this._getBeanCount()
     },
