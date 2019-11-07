@@ -8,8 +8,8 @@ export default {
     INDEX: `${MAIN}/index/index`,
     MINE: `${MAIN}/mine/mine`,
     LOGIN: `${MAIN}/login/login`,
-    GOODS_DETAIL:`${MAIN}/goods-detail/goods-detail`,
-    SUBMIT_ORDER:`${MAIN}/submit-order/submit-order`,
+    GOODS_DETAIL:`${MAIN}/main/goods-detail/goods-detail`,
+    SUBMIT_ORDER:`${MAIN}/main/submit-order/submit-order`,
 
     // main
   }

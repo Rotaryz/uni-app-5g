@@ -1,4 +1,5 @@
 import {globalComputed,globalMethods} from "@/store/helpers.js"
+import appJson from '../pages.json'
 
 export default {
   computed: {
@@ -19,7 +20,7 @@ export default {
       if (!token) {
         return
       }
-      let formId = e.uni.detail.formId
+      let formId = e.detail.formId
       this.$API.Login.getFormId({data: {form_ids: [formId]}})
     },
     // 授权登录
@@ -66,7 +67,7 @@ export default {
             return false
           }
         }).catch(err => {
-          uni.navigateTo({url: that.$routes.uni.LOGIN})
+          uni.navigateTo({url: that.$routes.main.LOGIN})
           return false
         })
         return true
@@ -78,6 +79,25 @@ export default {
         return false
       }
       return true
+    },
+    // 获取当前页面的完整路径
+    $getUrl(path = '', query = '') {
+      let url = path || (this.$root.$mp.page && this.$root.$mp.page.route)
+      let status = this.$checkIsTabPage(url)
+      query = query || this.$root.$mp.query
+      if (!status) {
+        let string = ''
+        for (let value in query) {
+          string += `&${value}=${query[value]}`
+        }
+        url = string ? `${url}?${string.slice(1)}` : url
+      }
+      return url
+    },
+    $checkIsTabPage(path) {
+      // const TAB_REG = /(pages\/home)|(pages\/shopping-cart)|(pages\/mine)/
+      // return TAB_REG.test(path)
+      return appJson.tabBar.list.some(val => path.includes(val.pagePath))
     }
   }
 }
