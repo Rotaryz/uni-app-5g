@@ -16,15 +16,23 @@
       return {}
     },
     async onLoad() {
-      // this.API.Login.getToken({
-      //   data: {code: 'customer_index'}
+      this.$API.Good.demo({
+        data: {code: 'customer_index'}
+      })
+        .then((res) => {
+          console.log(res, 'ok')
+        })
+        .catch((err) => {
+          console.log(err, '5454')
+        })
+      // let res = await this.$API.Good.demo({
+      //   data: {code: 'customer_index'},
+      //   doctor(res) {
+      //     console.log(res.message)
+      //   }
       // })
-      //   .then((res) => {
-      //     console.log(res, 'ok')
-      //   })
-      //   .catch((err) => {
-      //     console.log(err, '5454')
-      //   })
+      // console.log(res)
+      // console.log('sdfsd')
     }
   }
 </script>

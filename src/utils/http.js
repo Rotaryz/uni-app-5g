@@ -43,11 +43,12 @@ class HTTP {
             console.error(url + ' <<<<<<接口请求失败>>>>> 异常提示：' + JSON.stringify(res.message))
             return false
           }
+          let result = that.callback.responseFulfilled(res, args)
           // 请求完成后的逻辑处理
-          if (typeof that.callback.responseFulfilled === 'function') {
-            resolve(that.callback.responseFulfilled(res, args))
+          if (typeof result === 'function') {
+            resolve(result)
           } else {
-            resolve(res)
+            reject(result)
           }
         },
         fail(err) {
