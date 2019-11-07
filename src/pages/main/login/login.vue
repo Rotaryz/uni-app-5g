@@ -38,7 +38,7 @@
     name: PAGE_NAME,
     data() {
       return {
-        e:{},
+        e: {},
         loginTime: 3,
         code: "",
         status: 0 //2未操作 1已经授权  0拒绝授权
@@ -71,16 +71,14 @@
           return
         }
         if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
-          this._login(this.code,e).then(res=>{
+          this._login(this.code, e).then(res => {
             this.$API.Login.getFormId({data: {form_ids: [this.formId]}})
-            setTimeout(() => {
-              uni.redirectTo({
-                url: this.$routes.main.INDEX
-              })
-            }, 2000)
+            uni.redirectTo({
+              url: this.$storage("keepPage")
+            })
           }).catch(async (err) => {
             this.code = await getCode(this.$storage("provider"))
-            this._login(this.code,e)
+            this._login(this.code, e)
           })
         } else {
           uni.showToast({

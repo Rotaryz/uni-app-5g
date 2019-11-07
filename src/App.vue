@@ -5,6 +5,7 @@
             title: 0
         },
         async onLaunch() {
+          this.$storage('keepPage', '/pages/main/index/index')
             //获取服务商信息
           let provider = await getProvider()
           this.$storage("provider", provider[0])

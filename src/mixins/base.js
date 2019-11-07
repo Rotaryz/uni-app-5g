@@ -1,10 +1,12 @@
 import {globalComputed,globalMethods} from "@/store/helpers.js"
+// import appJson from '../app.json'
 
 export default {
   computed: {
     ...globalComputed
   },
   onLoad(options) {
+    this._saveCurrentPage()
   },
   methods: {
     ...globalMethods,
@@ -12,6 +14,32 @@ export default {
     $storage(key, val) {
       if (val) uni.setStorageSync(key, val)
       else return uni.getStorageSync(key)
+    },
+    // 记录页面路径
+    _saveCurrentPage() {
+      let url = this.$getCurrentUrl()
+      // 记录页面栈
+      if (!url || url.includes('lost') || url.includes('network-error') || url.includes('login')) {
+        return
+      }
+      this.$storage('keepPage', url)
+    },
+    $checkIsTabPage(path = '') {
+      return appJson.tabBar.list.some(val => path.includes(val.pagePath))
+    },
+    $getCurrentUrl(path = '', query = '') {
+      let url = '/' + (path || (this.$root.$mp.page && this.$root.$mp.page.route))
+      let status = ""
+      // let status = this.$checkIsTabPage(url)
+      query = query || this.$root.$mp.query
+      if (!status) {
+        let string = ''
+        for (let value in query) {
+          string += `&${value}=${query[value]}`
+        }
+        url = string ? `${url}?${string.slice(1)}` : url
+      }
+      return url
     },
     // button收集手机formId
     async $getFormId(e) {
@@ -41,13 +69,10 @@ export default {
         loading: false,
         toast: false,
       }).then(res => {
-        console.log(res)
         if (res.error_code !== this.$ERR_OK) return res
         this.$storage("token", res.data.access_token)
         this.$storage("userInfo", res.data.customer_info)
-        uni.navigateBack({
-          delta: 1
-        })
+        return res
       }).catch(err => {
         console.log(err)
       })
