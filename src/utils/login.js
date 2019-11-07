@@ -1,33 +1,3 @@
-/**
- * 模板
- * @param data
- * @param loading
- * @returns {*}
- */
-const check = () => {
-    const promise = new Promise((resolve, reject) => {
-        uni.checkSession({
-            success() {
-                console.log('状态未过期')
-                //未过期
-                resolve(0)
-            },
-            fail() {
-                console.log('状态已过期')
-                //已过期
-                resolve(1)
-            }
-        })
-    }).catch(res => {
-        uni.showToast({
-            icon: 'none',
-            title: res.errMsg || '验证session失效',
-            duration: 2000
-        });
-    })
-
-    return promise
-}
 
 //获取服务商信息
 const getProvider = () => {
@@ -120,4 +90,12 @@ const getSetting = () => {
 
     return promise
 }
-export {check,getProvider,  getCode, getSetting}
+//跳转至小程序登录页
+const toLogin = () => {
+    setTimeout(() => {
+        uni.redirectTo({
+            url: '/pages/main/login/login'
+        });
+    }, 2000)
+}
+export {getProvider,  getCode, getSetting}
