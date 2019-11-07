@@ -325,7 +325,7 @@
       },
       // 加入购物车按钮
       async addToShoppingCart() {
-        // if (!await this.$checkToken()) return false
+        if (!await this.$checkToken()) return false
         if (!this.isCan()) return
         this._addToCart({ data: { spec_id: this.edit.spec_id, num: this.edit.count }, loading: false }).then(res => {
           this.visible = false
@@ -333,7 +333,7 @@
       },
       // 立即购买
       async goToSubmitOrder() {
-        // if (!await this.$checkToken()) return false
+        if (!await this.$checkToken()) return false
         if (!this.isCan()) return
         this.SET_ORDER({
           list: [{
@@ -352,7 +352,7 @@
       },
       // 去购物车
       async goToShoppingCart() {
-        // if (!await this.$checkToken()) return false
+        if (!await this.$checkToken()) return false
         wx.navigateTo({ url: this.$routes.main.SHOPPING_CART })
       },
       // 去首页

@@ -1,5 +1,5 @@
 import {globalComputed,globalMethods} from "@/store/helpers.js"
-import appJson from '../pages.json'
+// import appJson from '../app.json'
 
 export default {
   computed: {
@@ -97,7 +97,9 @@ export default {
     $checkIsTabPage(path) {
       // const TAB_REG = /(pages\/home)|(pages\/shopping-cart)|(pages\/mine)/
       // return TAB_REG.test(path)
-      return appJson.tabBar.list.some(val => path.includes(val.pagePath))
+      // todo
+      let tabPage = ['pages/main/index/index', 'pages/main/shop/shop', 'pages/main/mine/mine']
+      return tabPage.some(val => path.includes(val.path))
     }
   }
 }

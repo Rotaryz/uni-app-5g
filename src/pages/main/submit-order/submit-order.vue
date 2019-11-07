@@ -174,7 +174,7 @@
       },
       // 确认支付下单
       submitBtn() {
-        // if (!this.$checkToken()) return false
+        if (!this.$checkToken()) return false
         if (!this.address.id) {
           unit.showToast({ title: '请选择收货地址', icon: 'none' })
           return
