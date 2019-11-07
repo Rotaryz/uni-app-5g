@@ -10,7 +10,7 @@ export default {
     }
   },
   onLoad(options) {
-    this._saveCurrentPage()
+    this.saveCurrentPage()
   },
   methods: {
     ...globalMethods,
@@ -20,9 +20,10 @@ export default {
       else return uni.getStorageSync(key)
     },
     // 记录页面路径
-    _saveCurrentPage() {
+    saveCurrentPage() {
       let pages = getCurrentPages()
       let page = pages[pages.length - 1]
+      console.log('page',page.route)
       let url = "/" + page.route
       // 记录页面栈
       if (!url || url.includes("lost") || url.includes("network-error") || url.includes("login")) {
@@ -55,13 +56,12 @@ export default {
      *code 静默授权要传
      * encrypted_data，iv 首次登录要传
      */
-    _login(code, e) {
+    _login(code,otherParams) {
       let data = {code: code}
-      if (e) {
+      if (otherParams) {
         data = {
           ...data,
-          encrypted_data: e.detail.encryptedData,
-          iv: e.detail.iv
+         ...otherParams
         }
       }
       return this.$API.Login.getToken({
@@ -91,7 +91,7 @@ export default {
             return false
           }
         }).catch(err => {
-          uni.navigateTo({url: that.$routes.uni.LOGIN})
+          uni.navigateTo({url: this.$routes.uni.LOGIN})
           return false
         })
         return true

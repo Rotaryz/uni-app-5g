@@ -234,7 +234,6 @@
         border: none
         font-size: 0
         display: block
-
     .exchange-block
         border-radius: 3px
         background-image: linear-gradient(180deg, #FFFFFF 0%, #F5F6FA 50%)
