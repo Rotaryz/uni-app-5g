@@ -19,8 +19,10 @@ export default {
     LOGIN: `${MAIN}/login/login`,
     SHOPPING_CART: `${MAIN}/shopping-cart/shopping-cart`,
     CATEGORY: `${MAIN}/category/category`,
-    GOODS_DETAIL:`${MAIN}/main/goods-detail/goods-detail`,
-    SUBMIT_ORDER:`${MAIN}/main/submit-order/submit-order`,
+    GOODS_DETAIL: `${MAIN}/goods-detail/goods-detail`,
+    SUBMIT_ORDER: `${MAIN}/submit-order/submit-order`,
+    ORDER_LIST: `${MAIN}/order-list/order-list`,
+    ORDER_DETAIL: `${MAIN}/order-detail/order-detail`,
     // main
   }
 }
