@@ -16,6 +16,7 @@ if (appJson.subPackages && appJson.subPackages.length > 0) {
         pages.push(item.path)
       }
     })
+    pages.unshift('' + packageName[packageName.length - 1])
     choices.push({message: packageName[packageName.length - 1], value: pages})
   })
 }

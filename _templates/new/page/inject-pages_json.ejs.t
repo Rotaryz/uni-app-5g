@@ -1,7 +1,7 @@
 ---
 to: "src/pages.json"
 inject: true
-before: <%= package[0]==='main'?'':package[0]  %>
+before: <%= package[0]==='main'?'':package[1]  %>
 
 ---
 <%_ if (package[0]==='main') { _%>

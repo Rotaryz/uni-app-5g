@@ -38,13 +38,19 @@
     {
       "root": "pages/package-activity/",
       "pages": [
-        {
-          "path": "list/list",
-          "style": {
-            "navigationBarTitleText": "列表"
-          }
-        },
-        "activity_todo,"
+      {
+        "path": "list/list",
+        "style": {
+           "navigationBarTitleText": "列表"
+        }
+      },
+      {
+        "path": "demo/demo",
+        "style": {
+           "navigationBarTitleText": "研发模板"
+        }
+      },
+        "activity_todo"
       ]
     }
   ],

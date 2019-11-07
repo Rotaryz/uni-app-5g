@@ -1,5 +1,8 @@
 // PACKAGE_PATH
 const ACTIVITY = '/pages/package-activity'
+
+const ACTIVITY = '/pages/package-activity'
+
 const MAIN = '/pages/main'
 
 /* eslint-disable */
@@ -7,6 +10,13 @@ export default {
   activity: {
     PACKAGE: ACTIVITY,
     LIST:`${ACTIVITY}/list/list`,
+
+    DEMO:`${ACTIVITY}/demo/demo`,
+
+    // package-activity
+  },
+  activity: {
+    PACKAGE: ACTIVITY,
     // package-activity
   },
   main: {
