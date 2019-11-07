@@ -4,6 +4,7 @@ import {hideLoading, showLoading, showToast} from './uni-app'
 
 HTTP.init(config => {
   config.baseUrl = process.env.VUE_APP_API
+  config.header['Mini-program'] = PLATFORM
 })
 HTTP.setCallback({
   // 请求前处理
