@@ -1,7 +1,7 @@
 import {globalComputed, globalMethods} from "@/store/helpers.js"
-import appJson from "../pages.json"
-import DefaultMsg from '@/utils/ai-config'
-
+import appJson from "@/pages.json"
+import DefaultMsg from "@/utils/ai-config"
+console.log('appJson',appJson)
 export default {
   computed: {
     ...globalComputed
@@ -18,7 +18,9 @@ export default {
     },
     // 记录页面路径
     _saveCurrentPage() {
-      let url = this.$getCurrentUrl()
+      let  pages = getCurrentPages()
+      let  page = pages[pages.length - 1]
+      let url = page.route
       // 记录页面栈
       if (!url || url.includes("lost") || url.includes("network-error") || url.includes("login")) {
         return
@@ -27,29 +29,16 @@ export default {
     },
     // 是否是tab页面
     $checkIsTabPage(path = "") {
+      if (!appJson.tabBar) return
       console.log("appJson", appJson)
       return appJson.tabBar.list.some(val => path.includes(val.pagePath))
-    },
-    //获取当前页面
-    $getCurrentUrl(path = "", query = "") {
-      let url = "/" + (path || (this.$root.$mp.page && this.$root.$mp.page.route))
-      let status = this.$checkIsTabPage(url)
-      query = query || this.$root.$mp.query
-      if (!status) {
-        let string = ""
-        for (let value in query) {
-          string += `&${value}=${query[value]}`
-        }
-        url = string ? `${url}?${string.slice(1)}` : url
-      }
-      return url
     },
     // 行为记录采集
     $sendMsg(obj) {
       let data = DefaultMsg.create().set(obj)
-      this.$API.Ai.actionDataCollect({ data, loading: false, toast: false })
+      this.$API.Ai.actionDataCollect({data, loading: false, toast: false})
         .then(res => {
-          console.warn('发送事件。。。', data)
+          console.warn("发送事件。。。", data)
         })
         .catch(e => {
           console.error(e)
@@ -86,7 +75,7 @@ export default {
         if (res.error_code !== this.$ERR_OK) return res
         this.$storage("token", res.data.access_token)
         this.$storage("userInfo", res.data.customer_info)
-        console.log(this.$storage('token'))
+        console.log(this.$storage("token"))
         return res
       }).catch(err => {
         console.log(err)
