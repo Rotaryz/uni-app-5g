@@ -12,15 +12,45 @@
         </div>
         <div class="info-main-bottom">
           <div class="info-list">
-            <div class="info-number">{{integral}}</div>
+            <div class="info-number">{{integral || 0}}</div>
             <div class="info-text">兑换券</div>
           </div>
           <div class="info-list">
-            <div class="info-number">{{bean}}</div>
+            <div class="info-number">{{bean || 0}}</div>
             <div class="info-text">播豆</div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="order-router">
+      <div class="order-title-box">
+        <div class="order-title">服务订单</div>
+      </div>
+      <div class="order-enter">
+        <div class="order-enter-item" v-for="(item, index) in orderNav" :key="index" @tab="navigateOrder(item)">
+          <img mode="aspectFill" :src="item.icon" class="item-icon">
+          <div class="item-text">{{item.text}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="my-service">
+      <div class="order-title-box">
+        <div class="order-title">我的服务</div>
+      </div>
+      <div class="service-nav">
+        <div class="ser-nav-item" v-for="(item, index) in serviceNav" :key="index">
+          <img mode="aspectFill" :src="item.icon" class="nav-icon">
+          <div class="nav-text">{{item.text}}</div>
+        </div>
+      </div>
+    </div>
+    <!--分享赚钱-->
+    <div v-if="earnMoney.is_show" class="share-get-money">
+      <img src="./pic-fxzq@2x.png" class="share-img" mode="aspectFill">
+    </div>
+    <!-- 广告 -->
+    <div v-if="isAd" class="ad">
+      <img :src="ad.image_url" mode="aspectFill" class="ad-img">
     </div>
   </div>
 </template>
@@ -28,8 +58,23 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   // import API from '@api'
+  import routes from '@/utils/routes'
 
   const PAGE_NAME = 'MINE'
+  const ORDER_NAV = [
+    { url: '', icon: require('./icon-dfk@2x.png'), text: '待付款', status: 1 },
+    { url: '', icon: require('./icon-dct@2x.png'), text: '待成团', status: 2 },
+    { url: '', icon: require('./icon-dsy@2x.png'), text: '待使用', status: 3 },
+    { url: '', icon: require('./icon-alloeder@2x.png'), text: '全部订单', status: '' }
+  ]
+  const SERVICE_NAV = [
+    { icon: require('./icon-fworder@2x.png'), text: '播豆订单', status: '' },
+    { icon: require('./icon-dhjl@2x.png'), text: '兑换记录', status: '' },
+    { icon: require('./icon-jpjl@2x.png'), text: '奖品记录', status: '' },
+    { icon: require('./icon-fxzq@2x.png'), text: '我的收益', status: '' },
+    { icon: require('./icon-address@2x.png'), text: '我的地址', status: '' },
+    { icon: require('./icon-qhdp@2x.png'), text: '切换店铺', status: '' }
+  ]
 
   export default {
     name: PAGE_NAME,
@@ -39,8 +84,17 @@
         placeHeight: '',
         userInfo: {},
         defaultImg: require('./pic-head@2x.png'),
-        isLogin: true
+        orderNav: ORDER_NAV,
+        serviceNav: SERVICE_NAV,
+        isLogin: true,
+        ad: {},
+        earnMoney: { id: '', is_show: 0 },
+        integral: '',
+        bean: '',
+        isAd: false
       }
+    },
+    computed: {
     },
     onLoad() {
       let res = uni.getSystemInfoSync()
@@ -55,7 +109,12 @@
   /*@import "~@design"*/
 
   .mine
-    width: 100%
+    width: 100vw
+    min-height: 100vh
+    box-sizing: border-box
+    background: $color-white
+    position: relative
+    padding-bottom: 20px
     .mine-info
       position: relative
       padding: 25px 15px 0
@@ -135,6 +194,47 @@
               bottom: 0
               margin: auto 0
 
+    .order-router
+      margin: 0 15px 10px
+      overflow: hidden
+      position: relative
+      box-shadow: 0 6px 30px 0 rgba(227, 230, 241, 0.36)
+      background: $color-white
+      border-radius: 6px
+      border-1px($color-background)
+
+      .order-enter
+        layout(row)
+        align-items: center
+        padding: 20px 0 25px
+
+        .order-enter-item
+          flex: 1
+
+          .item-icon
+            display: block
+            width: 27px
+            height: @width
+            margin: 0 auto 8px
+          .item-text
+            text-align: center
+            font-size: $font-size-11
+            font-family: $font-family-regular
+            color: $color-text-sub
+
+  .order-title-box
+    height: 40px
+    padding: 0 15px
+
+    .order-title
+      width: 100%
+      height: 40px
+      line-height: @height
+      font-size: $font-size-15
+      font-bold()
+      color: #1f1f1f
+      border-bottom-1px($color-line)
+
   .top-background
     position: absolute
     left: 0
@@ -145,5 +245,51 @@
       height: 100%
       font-size: 0
       line-height: 0
+  .ad
+    margin: 15px 15px 0
+
+    .ad-img
+      border-radius: 6px
+      height: 21.33vw
+      display: block
+      width: 100%
+
+  .my-service
+    margin: 0 15px 10px
+    padding-bottom: 5.5px
+    position: relative
+    border-radius: 6px
+    box-shadow: 0 6px 30px 0 rgba(227, 230, 241, 0.36)
+
+    .service-nav
+      display: flex
+      flex-wrap: wrap
+
+      .ser-nav-item
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 25%
+        padding: 20px 0 18.5px
+
+      .nav-icon
+        width: 23px
+        height: @width
+
+      .nav-text
+        color: $color-text-main
+        font-family: $font-family-regular
+        margin-top: 12px
+        font-size: $font-size-12
+  .share-get-money
+    display: block
+    border-radius: 6px
+    height: px-change-vw(80)
+    padding: 0 15px 10px
+
+    .share-img
+      border-radius: 6px
+      width: 100%
+      height: 100%
 
 </style>

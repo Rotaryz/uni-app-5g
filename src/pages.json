@@ -7,6 +7,12 @@
       }
     },
     "todo",
+    {
+     "path": "pages/main/order-list/order-list",
+      "style": {
+         "navigationBarTitleText": "订单列表"
+      }
+     },
 	{
 	  "path": "pages/main/mine/mine",
 	  "style": {
