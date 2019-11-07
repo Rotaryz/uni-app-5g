@@ -15,8 +15,13 @@
                     <!-- #endif -->
                 </button>
                 <button class="login-btn" type="primary" open-type="getUserInfo" form-type="submit" @getuserinfo="_loginTo" v-else>
+                    <!-- #ifdef MP-WEIXIN -->
                     <img src="./icon-wechat@2x.png" class="wx-logo">
+                    <span class="title">微信授权登录</span>
+                    <!-- #endif -->
+                    <!-- #ifNdef MP-WEIXIN -->
                     <span class="title">授权登录</span>
+                    <!-- #endif -->
                 </button>
             </form>
         </div>
