@@ -10,7 +10,7 @@
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
                     <!-- #endif -->
-                    <!-- #ifNdef MP-WEIXIN -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <span class="title">授权登录</span>
                     <!-- #endif -->
                 </button>
@@ -19,7 +19,7 @@
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
                     <!-- #endif -->
-                    <!-- #ifNdef MP-WEIXIN -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <span class="title">授权登录</span>
                     <!-- #endif -->
                 </button>
