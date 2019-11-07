@@ -61,7 +61,7 @@
 
 <script type="text/ecmascript-6">
   import API from '../../../api'
-  import uniSwipeAction from '../../../components/uni-swipe-action/uni-swipe-action.vue'
+  import uniSwipeAction from '../../../components/uni-swipe-action/uni-swipe-action'
   import { cartMethods } from '../../../store/helpers'
 
   const PAGE_NAME = 'SHOPPING_CART'

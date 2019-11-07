@@ -12,20 +12,8 @@
       <swiper-item v-for="(tabItem,tabIndex) in categoryTab" :key="tabIndex">
         <scroll-view :scroll-top="scrollTop" lower-threshold="200" class="list-scroll-content" scroll-y @scrolltolower="_getListData">
           <div class="list-content">
-            <div v-for="(item, idx) in listData" :key="idx" class="goods-item">
-              <div class="goods-con">
-                <img v-if="item.goods_cover_image" :src="item.goods_cover_image" mode="aspectFill" class="goods-img">
-                <p class="title">{{item.name}}</p>
-                <div class="pay-money middle-big">
-                  <span class="money-icon font-regular">¥</span>
-                  <span class="num">{{item.cash_price}}</span>
-                  <span class="add-icon font-regular">+</span>
-                  <span class="num">{{ item.bean_price}}</span>
-                  <span class="bean-text font-regular">播豆</span>
-                </div>
-                <div class="price-sale">¥<span class="price-num">{{item.price}}</span></div>
-                <div class="buy-btn font-regular" @click="goToBuy(item)">购买</div>
-              </div>
+            <div v-for="(item, idx) in listData" :key="idx" class="item-con">
+              <goods-item :goods="item"></goods-item>
             </div>
           </div>
         </scroll-view>
@@ -37,6 +25,7 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   import API from '../../../api'
+  import goodsItem from './goods-item'
 
   const PAGE_NAME = 'CATEGORY'
   const CATEGORY = [
@@ -51,6 +40,9 @@
 
   export default {
     name: PAGE_NAME,
+    components: {
+      goodsItem
+    },
     data() {
       return {
         categoryTab: CATEGORY,
@@ -62,7 +54,8 @@
         listData: [],
         page: 1,
         hasMore: true,
-        onLoading: false
+        onLoading: false,
+        testData: []
       }
     },
     onLoad() {
@@ -80,12 +73,19 @@
         this.listData = []
       },
       _getListData(e, isRefresh = false) {
-        if (!this.hasMore) return
+        // if (!this.hasMore) return
         this.onLoading = true
         e && this.page++
         API.Goods.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
           if (this.page === 1) this.listData = []
-          if ([0, 2, 5].includes(this.tabIndex)) this.listData = [...this.listData, ...res.data]
+          // if ([0, 2, 5].includes(this.tabIndex)) this.listData = [...this.listData, ...res.data]
+          if (this.page === 1) {
+            this.listData = res.data
+            this.testData = res.data
+          } else {
+            this.listData = [...this.listData, ...this.testData]
+            this.categoryTab[0].name = this.page * this.testData.length
+          }
           this.hasMore = res.meta.current_page < res.meta.last_page
           isRefresh&&uni.stopPullDownRefresh()
         })
@@ -174,72 +174,12 @@
     padding: $list-margin 0 $list-margin $list-margin
     display: flex
     flex-wrap: wrap
-    .goods-item
+    .item-con
       width: 50%
       height: 291px
       padding-right: $list-margin
       padding-bottom: $list-margin
       box-sizing border-box
-      .goods-con
-        position: relative
-        height: 100%
-        border-radius: 6px
-        background: #ffffff
-        .goods-img
-          display: flex
-          width: 48vw
-          height: @width
-          border-radius: 6px 6px 0 0
-        .title
-          font-size 14px
-          line-height 20px
-          margin: 7px 10px 9px
-          color: $color-text-main
-          text-overflow: ellipsis
-          overflow: hidden
-          white-space: nowrap
-          font-bold()
-          no-wrap()
-        .price-sale
-          font-size: 11px
-          color: $color-text-sub
-          text-decoration-line line-through
-          padding: 7px 10px 19px
-        .pay-money
-          padding: 0 10px
-          color: $color-red
-          display: flex
-          align-items: flex-end
-          .money-icon
-            font-size: 14px
-            line-height: 1
-            transform: translateY(1px)
-          .num
-            font-size: 16px
-            line-height: 1
-            transform: translateY(2px)
-            font-bold()
-          .add-icon
-            font-size: 15px
-            line-height: 1
-            margin:0 1px
-            transform: translateY(1px)
-          .bean-text
-            font-size: 13px
-            line-height: 1
-            margin-left:2px
-        .buy-btn
-          position: absolute
-          bottom: 10px
-          right: 10px
-          width: 48px
-          height: 22px
-          line-height: 22px
-          font-size: 13px
-          text-align: center
-          color: #ffffff
-          background: $color-main
-          border-radius: 2px
 
   .font-regular
     font-family: $font-family-regular
