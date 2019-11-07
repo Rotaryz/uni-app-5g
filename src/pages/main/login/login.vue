@@ -74,7 +74,6 @@
           this._login(this.code, e).then(res => {
             let pages = getCurrentPages()
             console.log(pages.length, "length")
-            debugger
             if (pages.length > 1) {
               uni.navigateBack({
                 delta: 1

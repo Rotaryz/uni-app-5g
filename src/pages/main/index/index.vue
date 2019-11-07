@@ -144,9 +144,39 @@
     methods: {
       // 获取当前用户信息
       _getShopInfo() {
-        this.$API.Shop.getShopInfo().then(res => {
+        this.$API.Shop.getShopInfo({loading:false}).then(res => {
           this.shopInfo = res.data
         })
+      },
+      // 获取购物车商品数量
+      _getCartCount() {
+        this.$API.Cart.getCartCount({loading:false}).then(res => {
+          this.count = res.data.goods_count > 99 ? "99+" : res.data.goods_count
+          console.log(this.count)
+        })
+      },
+      // 获取cms数据
+      _getHomeDetail(loading = false) {
+        this.$API.Home.homeDetail({data: {code: "customer_index"}, loading, toast: true})
+          .then((res) => {
+            this.cmsList = res.data.children
+            // 提取专区的商品数量
+            this.cmsList = this.cmsList.map((item) => {
+              item.goods_num = 0
+              if (item.code === "exchange_area" || item.code === "bean_area") {
+                item.children.forEach((child) => {
+                  if (child.code === "exchange_list" || child.code === "bean_list") {
+                    item.goods_num = child.children.length
+                  }
+                })
+              }
+              return item
+            })
+            this.FirstLoading = false
+          })
+          .catch(() => {
+            this.FirstLoading = false
+          })
       },
       // 行为记录收集
       actionDataCollect() {
@@ -176,36 +206,7 @@
         wx.navigateTo({url: this.$routes.main.GOODS_CLASSIFY})
         //  跳转商品分类列表
       },
-      // 获取cms数据
-      _getHomeDetail(loading = false) {
-        this.$API.Home.homeDetail({data: {code: "customer_index"}, loading, toast: true})
-          .then((res) => {
-            this.cmsList = res.data.children
-            // 提取专区的商品数量
-            this.cmsList = this.cmsList.map((item) => {
-              item.goods_num = 0
-              if (item.code === "exchange_area" || item.code === "bean_area") {
-                item.children.forEach((child) => {
-                  if (child.code === "exchange_list" || child.code === "bean_list") {
-                    item.goods_num = child.children.length
-                  }
-                })
-              }
-              return item
-            })
-            this.FirstLoading = false
-          })
-          .catch(() => {
-            this.FirstLoading = false
-          })
-      },
-      // 获取购物车商品数量
-      _getCartCount() {
-        this.$API.Cart.getCartCount().then(res => {
-          this.count = res.data.goods_count > 99 ? "99+" : res.data.goods_count
-          console.log(this.count)
-        })
-      },
+
       // 去购车
       goToShoppingCart() {
         uni.navigateTo({url: this.$routes.main.SHOPPING_CART})
@@ -234,57 +235,6 @@
         font-size: 0
         display: block
 
-    /*.banner-box
-      position: relative
-
-      .banner
-        height: 59.73vw
-        background: $color-white
-
-        .item-img
-          width: 100%
-          height: 100%
-
-      .dot-wrapper
-        row-center()
-        bottom: 9.5px
-        display: flex
-
-        .dot-item
-          margin: 0 2px
-          width: 11px
-          height: 4px
-          border-radius: 4px
-          background: rgba(255, 255, 255, .5)
-          transition: all 0.2s
-          transform-origin: 50%
-
-        .dot-item-active
-          background: $color-white
-
-    .nav
-      padding: 0 10px
-      box-sizing: border-box
-      display: flex
-      justify-content: space-between
-      background: $color-background
-
-      .nav-item
-        padding: 13.5px 0 15px
-        text-align: center
-
-        .nav-icon
-          display: block
-          width: 13.867vw
-          margin: 0 auto 3px
-          height: @width
-
-        .nav-name
-          color: $color-text-main
-          font-family: $font-family-regular
-          font-size: $font-size-12
-
-  */
     .exchange-block
         border-radius: 3px
         background-image: linear-gradient(180deg, #FFFFFF 0%, #F5F6FA 50%)
