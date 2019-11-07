@@ -249,3 +249,41 @@ export function checkSession() {
     })
   })
 }
+// 支付方式。
+export function payWayFor (payRes) {
+  let config = {}
+  let method = 'requestPayment'
+  switch (process.env.VUE_APP_PLATFORM) {
+    case 'mp-baidu':
+      method = 'requestPolymerPayment'
+      config = {
+        bannedChannels: payRes.banned_channels,
+        orderInfo: {
+          'dealId': payRes.deal_id,
+          'appKey': payRes.app_key,
+          'totalAmount': payRes.total_amount,
+          'tpOrderId': payRes.tp_order_id,
+          'dealTitle': payRes.deal_title,
+          'signFieldsRange': payRes.sign_fields_range,
+          'rsaSign': payRes.rsa_sign,
+          'bizInfo': payRes.biz_info
+        }
+      }
+      break
+    case 'mp-weixin':
+      const { timestamp, nonceStr, signType, paySign } = payRes
+      config = {
+        timeStamp: timestamp,
+        nonceStr,
+        package: payRes.package,
+        signType,
+        paySign
+      }
+      break
+    default :
+      break
+  }
+  return new Promise((resolve, reject) => {
+    wx[method]({...config, success: resolve, fail: reject})
+  })
+}

@@ -16,7 +16,9 @@ export default {
     INDEX: `${MAIN}/index`,
     MINE: `${MAIN}/mine`,
     LOGIN:`${MAIN}/login`,
-    ORDER_LIST:`${MAIN}/order-list`,
+    ORDER_LIST:`${MAIN}/order-list/order-list`,
+    ORDER_DETAIL:`${MAIN}/order-detail/order-detail`,
+
     // main
   }
 }

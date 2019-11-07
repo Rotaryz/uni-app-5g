@@ -10,7 +10,7 @@
               scroll-with-animation="true"
       >
         <div v-for="(item, index) in navList" :class="tabIndex === index ? 'item-active'  : ''" :key="index"
-             class="item scroll-item" :id="'item'+index" @tag="_changeTab(index, item.status, $event)">
+             class="item scroll-item" :id="'item'+index" @tap="_changeTab(index, item.status, $event)">
           <p class="text">{{item.name}}</p>
         </div>
         <div :style="{left: move + 'px'}" class="line-box">
@@ -28,7 +28,7 @@
                 :style="{height: tabIndex * 1 === tabInx ? -1 : scrollHeight + 'px'}"
                 class="goods-list-box"
         >
-          <div v-for="(item, index) in tabItem.arr" :key="index" class="order-item" @click="goOrderDetail(item.id)">
+          <div v-for="(item, index) in tabItem.arr" :key="index" class="order-item" @tap="goOrderDetail(item.id)">
             <div class="order-header">
               <div class="order-time">{{item.created_at}}</div>
               <div class="order-status">{{item.status_str}}</div>
@@ -53,8 +53,8 @@
               </div>
             </div>
             <div v-if="item.status === 0" class="order-button">
-              <div v-if="item.status === 0" class="order-btn cancel" @click.stop="cancelOrder(item.id, index)">取消</div>
-              <div v-if="item.status === 0" class="order-btn confirm" @click.stop="orderRepay(item.id, index)">立即支付</div>
+              <div v-if="item.status === 0" class="order-btn cancel" @tap.stop="cancelOrder(item.id, index)">取消</div>
+              <div v-if="item.status === 0" class="order-btn confirm" @tap.stop="orderRepay(item.id, index)">立即支付</div>
             </div>
           </div>
           <!--<empty v-if="tabItem.isEmpty" :image="empty" :paddingTop="45.4" tip="你的订单是空的"></empty>-->
@@ -67,6 +67,7 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   // import API from '@api'
+  import * as UNI from '@/utils/uni-app.js'
 
   const PAGE_NAME = 'ORDER_LIST'
   const NAV_LIST = [
@@ -101,11 +102,20 @@
       this.orderList = this.navList.map(() => {
         return ARR
       })
+      console.log(this.orderList, 'this.orderList')
       this._changeTab(index)
       let res = uni.getSystemInfoSync()
       this.statusBarHeight = res.statusBarHeight ? res.statusBarHeight + 44 : 64
       this.winHeight = res.screenHeight
       this.getOrderList(true)
+    },
+    // 翻页
+    onReachBottom() {
+      if (this.orderList[this.tabIndex].page >= this.orderList[this.tabIndex].lastPage) {
+        return
+      }
+      this.orderList[this.tabIndex].page++
+      this.getOrderList()
     },
     computed: {
       scrollHeight() {
@@ -114,8 +124,84 @@
       }
     },
     methods: {
-      _changeTab() {},
-      getOrderList() {}
+      goOrderDetail(id) {
+        wx.navigateTo({ url: `${this.$routes.main.ORDER_DETAIL}?id=${id}` })
+      },
+      _changeTab(index, id, e) {
+        if (this.tabIndex === index) return
+        this.move = 79 * index
+        // 如果是切换旁边的tab就加上动画，不是旁边的tab就不要动画
+        this.boxTransition = ''
+        this.orderList[this.tabIndex].arr = this.orderList[this.tabIndex].arr.slice(0, 10)
+        this._setViewToItem(index)
+        this.orderList[this.tabIndex].page = 1
+        this.getOrderList()
+        wx.pageScrollTo({
+          scrollTop: 0,
+          duration: 0
+        })
+      },
+      // 滚动
+      _setViewToItem(index = 0) {
+        this.tabIndex = index
+        let number = index < 3 ? 0 : index - 2
+        this.viewToItem = `item${number}`
+      },
+      getOrderList() {
+        let data = { status: this.navList[this.tabIndex].status, page: this.orderList[this.tabIndex].page }
+        console.log(data)
+        this.$API.Mine.getOrderList({data: data})
+          .then((res) => {
+            this.orderList[this.tabIndex].lastPage = res.meta.last_page
+            let arr = res.data.map((item) => {
+              item.height = 145
+              return item
+            }) || []
+            if (this.orderList[this.tabIndex].page === 1) {
+              this.orderList[this.tabIndex].arr = arr
+              this.orderList[this.tabIndex].isEmpty = !arr.length
+            } else {
+              this.orderList[this.tabIndex].arr = this.orderList[this.tabIndex].arr.concat(arr)
+            }
+            this.orderList = JSON.parse(JSON.stringify(this.orderList))
+            console.log(arr)
+            console.log(res)
+          })
+      },
+      // 重新支付
+      orderRepay(id, index) {
+        this.$API.Mine.orderRepay({ data: { order_id: id } })
+          .then((res) => {
+            let payRes = res.data.pay_config
+            UNI.payWayFor(payRes).then(() => {
+              if (this.tabIndex === 0) {
+                // 全部列表的时候修改状态
+                this.orderList[this.tabIndex].status = 10
+                this.orderList[this.tabIndex].status_str = '待收货'
+                return
+              }
+              this.orderList[this.tabIndex].arr.splice(index, 1)
+            }).catch(() => {
+            })
+          })
+          .catch(() => {
+          })
+      },
+      // 取消订单
+      cancelOrder(id, index) {
+        this.$API.Mine.cancelOrder({ data: { id: id } })
+          .then((res) => {
+            if (this.tabIndex === 0) {
+              // 全部列表的时候修改状态
+              this.orderList[this.tabIndex].status = -1
+              this.orderList[this.tabIndex].status_str = '已关闭'
+              return
+            }
+            this.orderList[this.tabIndex].arr.splice(index, 1)
+          })
+          .catch(() => {
+          })
+      }
     }
   }
 </script>

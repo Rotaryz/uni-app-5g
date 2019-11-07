@@ -27,7 +27,7 @@
         <div class="order-title">服务订单</div>
       </div>
       <div class="order-enter">
-        <div class="order-enter-item" v-for="(item, index) in orderNav" :key="index" @tab="navigateOrder(item)">
+        <div class="order-enter-item" v-for="(item, index) in orderNav" :key="index">
           <img mode="aspectFill" :src="item.icon" class="item-icon">
           <div class="item-text">{{item.text}}</div>
         </div>
@@ -38,7 +38,7 @@
         <div class="order-title">我的服务</div>
       </div>
       <div class="service-nav">
-        <div class="ser-nav-item" v-for="(item, index) in serviceNav" :key="index">
+        <div class="ser-nav-item" v-for="(item, index) in serviceNav" :key="index" @tap="jumpPage(item)">
           <img mode="aspectFill" :src="item.icon" class="nav-icon">
           <div class="nav-text">{{item.text}}</div>
         </div>
@@ -68,7 +68,7 @@
     { url: '', icon: require('./icon-alloeder@2x.png'), text: '全部订单', status: '' }
   ]
   const SERVICE_NAV = [
-    { icon: require('./icon-fworder@2x.png'), text: '播豆订单', status: '' },
+    { url: routes.main.ORDER_LIST, icon: require('./icon-fworder@2x.png'), text: '播豆订单', status: '' },
     { icon: require('./icon-dhjl@2x.png'), text: '兑换记录', status: '' },
     { icon: require('./icon-jpjl@2x.png'), text: '奖品记录', status: '' },
     { icon: require('./icon-fxzq@2x.png'), text: '我的收益', status: '' },
@@ -101,6 +101,51 @@
       this.statusBarHeight = res.statusBarHeight || 20
       this.placeHeight = 44 + this.statusBarHeight
       this.backgroundHeight = 0.217 * res.screenWidth + this.placeHeight
+    },
+    onShow() {
+      console.log(uni.getStorageSync('userInfo'), 'www')
+      this.isLogin = !uni.getStorageSync('token')
+      this.userInfo = uni.getStorageSync('userInfo')
+      if (this.isLogin) return
+      this._getUserInfo()
+      this._getIntegralBeanCount()
+    },
+    methods: {
+      login() {
+        Storage('errorUrl', 'pages/mine')
+        wx.navigateTo({ url: this.$routes.main.LOGIN })
+      },
+      _getUserInfo() {
+        this.$API.Mine.getUserInfo({ data: {}, loading: false, toast: false })
+          .then((res) => {
+            let userInfo = uni.getStorageSync('userInfo') || {}
+            this.userInfo = Object.assign({}, userInfo, res.data)
+            uni.setStorageSync('userInfo', this.userInfo)
+          })
+          .catch(() => {
+          })
+      },
+      jumpPage(item) {
+        if (!item.url) return
+        wx.navigateTo({ url: item.url })
+      },
+      dealPrice(num, multiple) {
+        // 格式化数据
+        let numFix = (num / multiple).toFixed(3)
+        numFix = numFix.slice(0, -1)
+        let aa = numFix.match(/\d+\.\d+/g)
+        for (let index in aa) {
+          numFix = numFix.replace(aa[index], parseFloat(aa[index]))
+        }
+        return numFix
+      },
+      _getIntegralBeanCount() {
+        this.$API.Mine.getIntegralBeanCount({ data: {}, loading: false, toast: false })
+          .then((res) => {
+            this.bean = res.data.bean.available >= 10000 ? this.dealPrice(res.data.bean.available, 10000) + 'w' : res.data.bean.available
+            this.integral = res.data.integral.available >= 10000 ? this.dealPrice(res.data.integral.available, 10000) + 'w' : res.data.integral.available
+          })
+      }
     }
   }
 </script>
