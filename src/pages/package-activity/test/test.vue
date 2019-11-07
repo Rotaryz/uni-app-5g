@@ -5,7 +5,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import * as Helpers from './helpers'
+  import {globalMethods} from '@/store'
   // import API from '@api'
 
   const PAGE_NAME = 'TEST'
@@ -13,8 +13,13 @@
   export default {
     name: PAGE_NAME,
     data() {
-      return {
-      }
+      return {}
+    },
+    onLoad() {
+      console.log(this)
+    },
+    methods:{
+      ...globalMethods,
     }
   }
 </script>
