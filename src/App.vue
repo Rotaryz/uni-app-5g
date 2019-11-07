@@ -1,7 +1,5 @@
 <script>
     import {getProvider, getCode} from './utils/login.js'
-    import { globalMethods } from '@/state/helpers'
-
     export default {
         data: {
             title: 0
@@ -21,7 +19,7 @@
           async silenceLogin() {
             // 初始化获取静默授权
             let code = await getCode(this.$storage("provider"))
-            this._login(code)
+            // this._login(code)
           },
         }
     }

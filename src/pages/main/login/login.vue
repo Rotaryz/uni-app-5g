@@ -67,10 +67,6 @@
         }
         if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
           this._login(this.code,e).then(res=>{
-            uni.showToast({
-              title: "获取用户信息成功",
-              duration: 2000
-            })
             setTimeout(() => {
               uni.redirectTo({
                 url: this.$routes.main.INDEX
