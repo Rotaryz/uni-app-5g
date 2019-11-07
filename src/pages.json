@@ -38,30 +38,30 @@
     {
       "root": "pages/package-activity/",
       "pages": [
-      {
-        "path": "list/list",
-        "style": {
-           "navigationBarTitleText": "列表"
-        }
-      },
-      {
-        "path": "demo/demo",
-        "style": {
-           "navigationBarTitleText": "研发模板"
-        }
-      },
-      {
-        "path": "test/test",
-        "style": {
-           "navigationBarTitleText": "测试"
-        }
-      },
-      {
-        "path": "test2/test2",
-        "style": {
-           "navigationBarTitleText": "的人"
-        }
-      },
+        {
+          "path": "list/list",
+          "style": {
+            "navigationBarTitleText": "列表"
+          }
+        },
+        {
+          "path": "demo/demo",
+          "style": {
+            "navigationBarTitleText": "研发模板"
+          }
+        },
+        {
+          "path": "test/test",
+          "style": {
+            "navigationBarTitleText": "测试"
+          }
+        },
+        {
+          "path": "test2/test2",
+          "style": {
+            "navigationBarTitleText": "的人"
+          }
+        },
         "activity_todo"
       ]
     }
