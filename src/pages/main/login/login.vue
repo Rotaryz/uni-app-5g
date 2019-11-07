@@ -65,7 +65,7 @@
           });
           return
         }
-        if (e.detail && e.detail.errMsg == "getUserInfo:ok") {
+        if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
           this._login(this.code,e).then(res=>{
             uni.showToast({
               title: "获取用户信息成功",
