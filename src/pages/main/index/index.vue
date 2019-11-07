@@ -1,6 +1,12 @@
 <template>
   <div class="index">
     index
+    <navigator url="/pages/main/category/category" hover-class="navigator-hover">
+      <button type="default">分类</button>
+    </navigator>
+    <navigator url="/pages/main/shopping-cart/shopping-cart" hover-class="navigator-hover">
+      <button type="default">购物车</button>
+    </navigator>
   </div>
 </template>
 
