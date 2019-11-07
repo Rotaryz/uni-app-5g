@@ -1,8 +1,12 @@
 export const state = {
-  todo: true
+  testA: '12333'
 }
 
-export const getters = {}
+export const getters = {
+  testA(state) {
+    return state.testA
+  },
+}
 
 export const mutations = {}
 

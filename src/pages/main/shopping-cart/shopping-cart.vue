@@ -60,9 +60,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import * as Helpers from './helpers'
   import API from '../../../api'
   import uniSwipeAction from '../../../components/uni-swipe-action/uni-swipe-action.vue'
+  import { cartMethods } from '../../../store/helpers'
 
   const PAGE_NAME = 'SHOPPING_CART'
 
@@ -110,6 +110,7 @@
       this._getListData()
     },
     methods: {
+      ...cartMethods,
       setListData(res) {
         // 清除勾选计数
         this.selectCount = 0
@@ -169,7 +170,36 @@
         })
       },
       // 结算
-      settlement() {}
+      settlement() {
+        let list = this.listData.filter(item => item.select)
+        if (list.length <= 0) {
+          uni.showToast({ title: '请选择需要提交的商品', icon: 'none' })
+          return
+        }
+        let subList = list.map(item => {
+          return {
+            name: item.name,
+            id: item.id,
+            image: item.goods_cover_image,
+            specification: item.goods_spec.specs_attrs.map(item => {
+              return {
+                name: item.attr_key,
+                value: item.attr_value
+              }
+            }),
+            count: item.num,
+            spec_id: item.spec_id,
+            cashPrice: item.goods_spec.cash_price,
+            beanPrice: item.goods_spec.bean_price
+          }
+        })
+        console.log(subList)
+        this.SET_ORDER({
+          list: subList,
+          type: 'shopping_cart'
+        })
+        // uni.navigateTo({ url: this.$routes.main.SUBMIT_ORDER })
+      }
     }
   }
 </script>
