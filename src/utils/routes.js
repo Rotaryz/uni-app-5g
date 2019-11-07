@@ -8,6 +8,8 @@ export default {
     PACKAGE: ACTIVITY,
     LIST: `${ACTIVITY}/list/list`,
     DEMO: `${ACTIVITY}/demo/demo`,
+    TEST: `${ACTIVITY}/test/test`,
+    TEST2: `${ACTIVITY}/test2/test2`,
     // package-activity
   },
   main: {
