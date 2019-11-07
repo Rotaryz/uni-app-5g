@@ -15,18 +15,18 @@
     data() {
       return {}
     },
-    async onLoad() {
-      this.$API.Good.demo({
-        data: {code: 'customer_index'}
-      })
-        .then((res) => {
-          console.log(res, 'ok')
-        })
-        .catch((err) => {
-          console.log(err, '5454')
-        })
-      // console.log(this.$routes.main.MINE)
-      uni.navigateTo({url: this.$routes.main.MINE})
+    onLoad() {
+      // this.$API.Good.demo({
+      //   data: {code: 'customer_index'}
+      // })
+      //   .then((res) => {
+      //     console.log(res, 'ok')
+      //   })
+      //   .catch((err) => {
+      //     console.log(err, '5454')
+      //   })
+      console.log(this.$routes.main.MINE)
+      // uni.navigateTo({url: this.$routes.main.MINE})
       // let res = await this.$API.Good.demo({
       //   data: {code: 'customer_index'},
       //   doctor(res) {
