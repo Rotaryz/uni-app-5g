@@ -8,8 +8,8 @@ export default {
     INDEX: `${MAIN}/index/index`,
     MINE: `${MAIN}/mine/mine`,
     LOGIN:`${MAIN}/login/login`,
-    SHOPPING_CART: `${MAIN}/shopping-cart`,
-    CATEGORY: `${MAIN}/category`,
+    SHOPPING_CART: `${MAIN}/shopping-cart/shopping-cart`,
+    CATEGORY: `${MAIN}/category/category`,
     // main
   }
 }
