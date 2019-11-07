@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import store from '@/store'
+import store from '@/store/store'
 import {ERR_OK} from './config'
 import base from '@/mixins/base'
 import routes from '@/utils/routes'
