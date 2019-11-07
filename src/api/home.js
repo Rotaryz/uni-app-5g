@@ -8,7 +8,6 @@ export default {
    * @returns {*}
    */
   homeDetail(args) {
-    console.log(uni.getStorageSync('token'),'uni.getStorageSync(\'token\')')
     const url = `/customer/content/module/page`
     return request.get({ url, ...args })
   },

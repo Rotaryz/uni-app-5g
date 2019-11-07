@@ -10,7 +10,6 @@ class HTTP {
   }
 
   constructor() {
-    console.log(uni.getStorageSync('token'), 'http')
     this.callback = {}
     this.config = {
       // baseUrl: process.env.VUE_APP_API,

@@ -72,10 +72,19 @@
         }
         if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
           this._login(this.code, e).then(res => {
+            let pages = getCurrentPages()
+            console.log(pages.length, "length")
+            if (pages.length > 1) {
+              uni.navigateBack({
+                delta: 1
+              })
+            } else {
+              uni.switchTab({
+                url: this.$routes.main.INDEX
+              })
+            }
             this.$API.Login.getFormId({data: {form_ids: [this.formId]}})
-            uni.redirectTo({
-              url: this.$storage("keepPage")
-            })
+
           }).catch(async (err) => {
             this.code = await getCode(this.$storage("provider"))
             this._login(this.code, e)
