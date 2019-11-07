@@ -8,6 +8,18 @@
     },
     "todo",
     {
+      "path": "pages/main/goods-detail/goods-detail",
+      "style": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/main/submit-order/submit-order",
+      "style": {
+        "navigationBarTitleText": "提交订单"
+      }
+    },
+    {
       "path": "pages/main/category/category",
       "style": {
         "navigationBarTitleText": "分类",

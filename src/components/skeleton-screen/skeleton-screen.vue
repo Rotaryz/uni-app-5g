@@ -30,6 +30,9 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+
+  .skeleton
+
   .skeleton-screen
     position: fixed
     width: 100vw

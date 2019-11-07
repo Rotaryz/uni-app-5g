@@ -1,8 +1,6 @@
 import {globalComputed, globalMethods} from "@/store/helpers.js"
 import DefaultMsg from "@/utils/ai-config"
 export default {
-  data(){
-  },
   computed: {
     ...globalComputed,
     provider(){
@@ -91,7 +89,7 @@ export default {
             return false
           }
         }).catch(err => {
-          uni.navigateTo({url: that.$routes.uni.LOGIN})
+          uni.navigateTo({url: that.$routes.main.LOGIN})
           return false
         })
         return true
@@ -103,6 +101,27 @@ export default {
         return false
       }
       return true
+    },
+    // 获取当前页面的完整路径
+    $getUrl(path = '', query = '') {
+      let url = path || (this.$root.$mp.page && this.$root.$mp.page.route)
+      let status = this.$checkIsTabPage(url)
+      query = query || this.$root.$mp.query
+      if (!status) {
+        let string = ''
+        for (let value in query) {
+          string += `&${value}=${query[value]}`
+        }
+        url = string ? `${url}?${string.slice(1)}` : url
+      }
+      return url
+    },
+    $checkIsTabPage(path) {
+      // const TAB_REG = /(pages\/home)|(pages\/shopping-cart)|(pages\/mine)/
+      // return TAB_REG.test(path)
+      // todo
+      let tabPage = ['pages/main/index/index', 'pages/main/shop/shop', 'pages/main/mine/mine']
+      return tabPage.some(val => path.includes(val.path))
     }
   }
 }

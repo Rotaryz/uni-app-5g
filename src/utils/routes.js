@@ -19,6 +19,8 @@ export default {
     LOGIN: `${MAIN}/login/login`,
     SHOPPING_CART: `${MAIN}/shopping-cart/shopping-cart`,
     CATEGORY: `${MAIN}/category/category`,
+    GOODS_DETAIL:`${MAIN}/main/goods-detail/goods-detail`,
+    SUBMIT_ORDER:`${MAIN}/main/submit-order/submit-order`,
     // main
   }
 }
