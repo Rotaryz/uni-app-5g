@@ -1,5 +1,5 @@
 import {globalComputed,globalMethods} from "@/store/helpers.js"
-// import appJson from '../app.json'
+import appJson from '../pages.json'
 
 export default {
   computed: {
@@ -29,8 +29,7 @@ export default {
     },
     $getCurrentUrl(path = '', query = '') {
       let url = '/' + (path || (this.$root.$mp.page && this.$root.$mp.page.route))
-      let status = ""
-      // let status = this.$checkIsTabPage(url)
+      let status = this.$checkIsTabPage(url)
       query = query || this.$root.$mp.query
       if (!status) {
         let string = ''
