@@ -1,8 +1,8 @@
-import { globalComputed } from '@/store/helpers'
+// import {globalComputed} from "@/store/helpers"
 
 export default {
   computed: {
-    ...globalComputed
+    // ...globalComputed
   },
   onLoad(options) {
   },
@@ -14,47 +14,68 @@ export default {
     },
     // button收集手机formId
     async $getFormId(e) {
-      const token = this.$storage('token')
+      const token = this.$storage("token")
       if (!token) {
         return
       }
       let formId = e.uni.detail.formId
-      this.API.Login.getFormId({ data: { form_ids: [formId] }})
+      this.$API.Login.getFormId({data: {form_ids: [formId]}})
+    },
+    // 授权登录
+    /**
+     *code 静默授权要传
+     * encrypted_data，iv 首次登录要传
+     */
+    _login(code, e) {
+      let data = {code: code}
+      if (e) {
+        data = {
+          ...data,
+          encrypted_data: e.detail.encryptedData,
+          iv: e.detail.iv
+        }
+      }
+      return this.$API.Login.getToken({
+        data,
+        loading: false,
+        toast: false,
+      }).then(res => {
+        console.log(res)
+        if (res.error_code !== this.$ERR_OK) return res
+        this.$storage("token", res.data.access_token)
+        this.$storage("userInfo", res.data.customer_info)
+        uni.navigateBack({
+          delta: 1
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+
     },
     // 判断是否需要跳转登录页面
     async $checkToken() {
       let that = this
       let url = this.$getUrl()
-      /* eslint-disable no-undef */
-      let token = this.$storage('token')
+      let token = this.$storage("token")
       if (!token) {
-        let codeMsg = await wechat.login()
-        let tokenJson = await API.Login.getToken({
-          data: { code: codeMsg.code },
-          loading: false,
-          toast: false,
-          doctor() {
-            wx.reLaunch({ url: that.$routes.other.LOGIN })
-            this.$storage('targetPage', url)
+        let code = await getCode(this.$storage("provider"))
+        this._login({data: code}).then(res => {
+          if (!res.data.customer_info.is_register) {
+            this.$storage("targetPage", url)
+            uni.reLaunch({url: this.$routes.main.LOGIN})
             return false
           }
-        })
-        if (!tokenJson.data.customer_info.is_register) {
-          wx.reLaunch({ url: this.$routes.other.LOGIN })
+        }).catch(err => {
+          uni.reLaunch({url: that.$routes.uni.LOGIN})
+          this.$storage("targetPage", url)
           return false
-        }
-        wx.setStorageSync('token', tokenJson.data.access_token)
-        wx.setStorageSync('userInfo', tokenJson.data.customer_info)
-        HTTP.setHeaders({ Authorization: tokenJson.data.access_token })
-        /* eslint-disable no-undef */
-        let page = getCurrentPages()[getCurrentPages().length - 1]
-        page.onLoad(page.options)
-        page.onShow()
+        })
         return true
       }
-      let userInfo = this.$storage('userInfo')
+      // 有token 是否注册
+      let userInfo = this.$storage("userInfo")
       if (!userInfo.is_register) {
-        wx.reLaunch({ url: this.$routes.other.LOGIN })
+        wx.reLaunch({url: this.$routes.main.LOGIN})
         return false
       }
       return true
