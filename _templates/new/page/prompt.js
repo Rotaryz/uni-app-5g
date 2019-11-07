@@ -5,9 +5,18 @@ let pageName = []
 // 存在分包时
 if (appJson.subPackages && appJson.subPackages.length > 0) {
   appJson.subPackages.forEach((item) => {
-    const packageName = item.root.replace(/\//g, '')
-    item.pages.unshift('' + packageName)
-    choices.push({message: packageName, value: item.pages})
+    let path = item.root.slice(0, -1)
+    const packageName = path.split('/')
+    // item.pages.unshift('' + packageName[packageName.length - 1])
+    let pages = []
+    item.pages.forEach((item) => {
+      if (typeof item === 'string') {
+        pages.unshift(item)
+      } else {
+        pages.push(item.path)
+      }
+    })
+    choices.push({message: packageName[packageName.length - 1], value: pages})
   })
 }
 appJson.pages.forEach((item) => {
@@ -18,7 +27,6 @@ const MSG = JSON.stringify(appJson.pages[appJson.pages.length - 2])
 pageName.unshift(MAIN_PACKAGE)
 // 首个插入main包
 choices.unshift({message: MAIN_PACKAGE, value: pageName, path: MSG})
-console.log(pageName)
 module.exports = [
   {
     type: 'select',
