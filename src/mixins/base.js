@@ -1,10 +1,13 @@
 import {globalComputed, globalMethods} from "@/store/helpers.js"
-import appJson from "@/pages.json"
 import DefaultMsg from "@/utils/ai-config"
-console.log('appJson',appJson)
 export default {
+  data(){
+  },
   computed: {
-    ...globalComputed
+    ...globalComputed,
+    provider(){
+      return process.env.VUE_APP_PLATFORM
+    }
   },
   onLoad(options) {
     this._saveCurrentPage()
@@ -18,20 +21,14 @@ export default {
     },
     // 记录页面路径
     _saveCurrentPage() {
-      let  pages = getCurrentPages()
-      let  page = pages[pages.length - 1]
-      let url = page.route
+      let pages = getCurrentPages()
+      let page = pages[pages.length - 1]
+      let url = "/" + page.route
       // 记录页面栈
       if (!url || url.includes("lost") || url.includes("network-error") || url.includes("login")) {
         return
       }
       this.$storage("keepPage", url)
-    },
-    // 是否是tab页面
-    $checkIsTabPage(path = "") {
-      if (!appJson.tabBar) return
-      console.log("appJson", appJson)
-      return appJson.tabBar.list.some(val => path.includes(val.pagePath))
     },
     // 行为记录采集
     $sendMsg(obj) {
@@ -75,7 +72,6 @@ export default {
         if (res.error_code !== this.$ERR_OK) return res
         this.$storage("token", res.data.access_token)
         this.$storage("userInfo", res.data.customer_info)
-        console.log(this.$storage("token"))
         return res
       }).catch(err => {
         console.log(err)

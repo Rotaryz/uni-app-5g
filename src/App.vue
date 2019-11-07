@@ -7,11 +7,12 @@
       title: 0
     },
     async onLaunch() {
+      console.log(this.provider, "provider")
       this.$storage("keepPage", "/pages/main/index/index")
       //获取服务商信息
       let provider = await getProvider()
+      console.log(provider[0], " provider[0]")
       this.$storage("provider", provider[0])
-      this.setProvider(provider[0])
     },
     onShow() {
       let shopId = this.$storage("shopId") || ""

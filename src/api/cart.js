@@ -1,4 +1,4 @@
-import request from '../utils/http'
+import request from '@/utils/http'
 
 export default {
   // 获取购物车列表

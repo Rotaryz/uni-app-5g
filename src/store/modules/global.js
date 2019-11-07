@@ -1,13 +1,11 @@
 export const state = {
   userInfo: {},
   token: '',
-  provider:''
 }
 
 export const getters = {
   userInfo: state => state.userInfo,
-  token: state => state.token,
-  provider: state => state.token,
+  token: state => state.token
 }
 
 export const mutations = {
@@ -16,10 +14,7 @@ export const mutations = {
   },
   SET_USER_INFO(state, obj) {
     state.userInfo = obj
-  },
-  SET_PROVIDER(state, str) {
-    state.provider = str
-  },
+  }
 }
 
 export const actions = {
@@ -28,8 +23,5 @@ export const actions = {
   },
   setUserInfo({commit, state}, obj) {
     commit('SET_USER_INFO', obj)
-  },
-  setProvider({commit, state}, str) {
-    commit('SET_PROVIDER', str)
   }
 }
