@@ -1,7 +1,6 @@
 // const chalk = require('chalk')
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
-// console.log(process.argv)
 
 let obj = {
   version: JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
