@@ -14,14 +14,18 @@ class HTTP {
     this.config = {
       // baseUrl: process.env.VUE_APP_API,
       header: {
-        'Authorization': uni.getStorageSync('token') || '27daa2f3a3de5548f6edc1a9392de6e3ccb8826e',
-        'Current-Shop': uni.getStorageSync('shopId') || '1',
-        'Mini-program':'swan'|| uni.getStorageSync('provider') || 'wx'
+        'Authorization': uni.getStorageSync('token'),
+        'Current-Shop': uni.getStorageSync('shopId'),
+        'Mini-program': PLATFORM
       }
     }
   }
 
   _formatRequest(args, {method}) {
+    let token = uni.getStorageSync('token')
+    let shopId = uni.getStorageSync('shopId')
+    if (token !== this.config.header['Authorization']) this.config.header['Authorization'] = token
+    if (shopId !== this.config.header['Current-Shop']) this.config.header['Current-Shop'] = shopId
     let {url, data} = args
     // 请求前处理
     if (typeof this.callback.beforeRequest === 'function') {

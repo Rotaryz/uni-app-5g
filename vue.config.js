@@ -2,13 +2,6 @@
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
 
-let obj = {
-  version: JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
-  platform: process.env.VUE_APP_PLATFORM,
-  env: process.env.VUE_APP_ENV
-}
-console.log('环境配置', obj)
-
 // 第三方插件
 var definePlugin = new webpack.DefinePlugin({
   'VERSION': JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
@@ -75,3 +68,10 @@ function infoPlatform() {
   }
   return value
 }
+
+let obj = {
+  version: JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
+  platform: process.env.VUE_APP_PLATFORM,
+  env: process.env.VUE_APP_ENV
+}
+console.log('环境配置', obj)

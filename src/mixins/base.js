@@ -1,11 +1,14 @@
-import {globalComputed,globalMethods} from "@/store/helpers.js"
-// import appJson from '../app.json'
-
+import {globalComputed, globalMethods} from "@/store/helpers.js"
+import DefaultMsg from "@/utils/ai-config"
 export default {
   computed: {
-    ...globalComputed
+    ...globalComputed,
+    provider(){
+      return process.env.VUE_APP_PLATFORM
+    }
   },
   onLoad(options) {
+    this._saveCurrentPage()
   },
   methods: {
     ...globalMethods,
@@ -13,6 +16,28 @@ export default {
     $storage(key, val) {
       if (val) uni.setStorageSync(key, val)
       else return uni.getStorageSync(key)
+    },
+    // 记录页面路径
+    _saveCurrentPage() {
+      let pages = getCurrentPages()
+      let page = pages[pages.length - 1]
+      let url = "/" + page.route
+      // 记录页面栈
+      if (!url || url.includes("lost") || url.includes("network-error") || url.includes("login")) {
+        return
+      }
+      this.$storage("keepPage", url)
+    },
+    // 行为记录采集
+    $sendMsg(obj) {
+      let data = DefaultMsg.create().set(obj)
+      this.$API.Ai.actionDataCollect({data, loading: false, toast: false})
+        .then(res => {
+          console.warn("发送事件。。。", data)
+        })
+        .catch(e => {
+          console.error(e)
+        })
     },
     // button收集手机formId
     async $getFormId(e) {
@@ -42,13 +67,10 @@ export default {
         loading: false,
         toast: false,
       }).then(res => {
-        console.log(res)
         if (res.error_code !== this.$ERR_OK) return res
         this.$storage("token", res.data.access_token)
         this.$storage("userInfo", res.data.customer_info)
-        uni.navigateBack({
-          delta: 1
-        })
+        return res
       }).catch(err => {
         console.log(err)
       })

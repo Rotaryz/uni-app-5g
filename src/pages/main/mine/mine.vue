@@ -1,6 +1,7 @@
 <template>
   <div class="mine">
     mine
+    <div @click="click">11111</div>
   </div>
 </template>
 
@@ -14,6 +15,16 @@
     name: PAGE_NAME,
     data() {
       return {
+      }
+    },
+    onLoad(){
+      console.log(this.$root,this.$root.$mp.page.route)
+    },
+    methods:{
+      click(){
+        uni.navigateTo({
+          url: this.$routes.main.LOGIN
+        })
       }
     }
   }

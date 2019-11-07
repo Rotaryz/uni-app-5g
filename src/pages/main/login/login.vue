@@ -10,13 +10,18 @@
                     <img src="./icon-wechat@2x.png" class="wx-logo">
                     <span class="title">微信授权登录</span>
                     <!-- #endif -->
-                    <!-- #ifNdef MP-WEIXIN -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <span class="title">授权登录</span>
                     <!-- #endif -->
                 </button>
-                <button class="login-btn" type="primary" open-type="getUserInfo" @getuserinfo="_loginTo" v-else>
+                <button class="login-btn" type="primary" open-type="getUserInfo" form-type="submit" @getuserinfo="_loginTo" v-else>
+                    <!-- #ifdef MP-WEIXIN -->
                     <img src="./icon-wechat@2x.png" class="wx-logo">
+                    <span class="title">微信授权登录</span>
+                    <!-- #endif -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <span class="title">授权登录</span>
+                    <!-- #endif -->
                 </button>
             </form>
         </div>
@@ -33,7 +38,7 @@
     name: PAGE_NAME,
     data() {
       return {
-        e:{},
+        e: {},
         loginTime: 3,
         code: "",
         status: 0 //2未操作 1已经授权  0拒绝授权
@@ -50,7 +55,7 @@
     },
     methods: {
       getFormId(e) {
-        this.formId = e.uni.detail.formId
+        this.formId = e.detail.formId
       },
       // 获取用户信息
       _loginTo(e) {
@@ -66,15 +71,23 @@
           return
         }
         if (e.detail && e.detail.errMsg === "getUserInfo:ok") {
-          this._login(this.code,e).then(res=>{
-            setTimeout(() => {
-              uni.redirectTo({
+          this._login(this.code, e).then(res => {
+            let pages = getCurrentPages()
+            console.log(pages.length, "length")
+            if (pages.length > 1) {
+              uni.navigateBack({
+                delta: 1
+              })
+            } else {
+              uni.switchTab({
                 url: this.$routes.main.INDEX
               })
-            }, 2000)
+            }
+            this.$API.Login.getFormId({data: {form_ids: [this.formId]}})
+
           }).catch(async (err) => {
             this.code = await getCode(this.$storage("provider"))
-            this._login(this.code,e)
+            this._login(this.code, e)
           })
         } else {
           uni.showToast({

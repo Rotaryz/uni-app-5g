@@ -6,12 +6,7 @@
         "navigationBarTitleText": "首页"
       }
     },
-    {
-      "path": "pages/main/mine/mine",
-      "style": {
-        "navigationBarTitleText": "个人中心"
-      }
-    },
+    "todo",
     {
       "path": "pages/main/goods-detail/goods-detail",
       "style": {
@@ -24,19 +19,89 @@
         "navigationBarTitleText": "提交订单"
       }
     },
-	{
-	 "path": "pages/main/login/login",
-	  "style": {
-	     "navigationBarTitleText": "登录"
-	  }
-	 }
+    {
+      "path": "pages/main/category/category",
+      "style": {
+        "navigationBarTitleText": "分类",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/main/shopping-cart/shopping-cart",
+      "style": {
+        "navigationBarTitleText": "购物车",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/main/mine/mine",
+      "style": {
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/main/login/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    }
   ],
   "subPackages": [
+    {
+      "root": "pages/package-activity/",
+      "pages": [
+        {
+          "path": "list/list",
+          "style": {
+            "navigationBarTitleText": "列表"
+          }
+        },
+        {
+          "path": "demo/demo",
+          "style": {
+            "navigationBarTitleText": "研发模板"
+          }
+        },
+        {
+          "path": "test/test",
+          "style": {
+            "navigationBarTitleText": "测试"
+          }
+        },
+        {
+          "path": "test2/test2",
+          "style": {
+            "navigationBarTitleText": "的人"
+          }
+        },
+        "activity_todo"
+      ]
+    }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTitleText": "兑换商城",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F5F5F9"
+  },
+  "tabBar": {
+    "color": "#979BA5",
+    "selectedColor": "#19B6B4",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/index/index",
+        "iconPath": "static/tabs/icon-gift.png",
+        "selectedIconPath": "static/tabs/icon-gift_pressed.png",
+        "text": "商城"
+      },
+      {
+        "pagePath": "pages/main/mine/mine",
+        "iconPath": "static/tabs/icon-mine.png",
+        "selectedIconPath": "static/tabs/icon-mine_pressed.png",
+        "text": "我的"
+      }
+    ]
   }
 }

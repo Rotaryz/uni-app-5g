@@ -1,10 +1,11 @@
 {
-  "name": "",
+  "name": "5G新电商",
   "appid": "",
-  "description": "",
+  "description": "5G新电商平台，用于C端客户购物",
   "versionName": "1.0.0",
   "versionCode": "100",
   "transformPx": false,
+  "debug": false,
   "app-plus": {
     "usingComponents": true,
     "splashscreen": {
@@ -49,17 +50,19 @@
     }
   },
   "quickapp": {
-    /* 快应用特有相关 */
   },
   "mp-weixin": {
-    /* 微信小程序特有相关 */
     "appid": "wxbebabb5eb8a0b7b3",
+    "usingComponents": true,
     "setting": {
-      "urlCheck": false
-    },
-    "usingComponents": true
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    }
   },
   "mp-alipay": {
+    "appid": "",
     "usingComponents": true
   },
   "mp-baidu": {
@@ -68,9 +71,16 @@
   },
   "mp-toutiao": {
     "appid": "ttf8938e2e67b9267f",
-    "usingComponents": true
+    "usingComponents": true,
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    }
   },
   "mp-qq": {
+    "appid": "",
     "usingComponents": true
   }
 }
