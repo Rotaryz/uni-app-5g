@@ -64,7 +64,6 @@
   // import API from '@api'
   import API from '../../../api'
   import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
-  import shoppingData from './shopping-data'
 
   const PAGE_NAME = 'SHOPPING_CART'
 

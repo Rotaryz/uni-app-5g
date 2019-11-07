@@ -37,21 +37,30 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   import API from '../../../api'
-  import categoryData from './category-data'
 
   const PAGE_NAME = 'CATEGORY'
+  const CATEGORY = [
+    { name: '家用百货', id: 1 },
+    { name: '食品酒类', id: 2 },
+    { name: '服装饰品', id: 3 },
+    { name: '家用电器', id: 4 },
+    { name: '美妆个护', id: 5 },
+    { name: '办公文具', id: 6 },
+    { name: '体育用品', id: 7 }
+  ]
 
   export default {
     name: PAGE_NAME,
     data() {
       return {
-        categoryTab: categoryData.category,
+        categoryTab: CATEGORY,
         tabIndex: 0,
         listData: [],
         durationTime: 300,
         scrollTop: 0,
         oldScrollTop: 0,
-        page: 1
+        page: 1,
+        hasMore: true
       }
     },
     onLoad() {
@@ -64,10 +73,12 @@
     },
     methods: {
       _getListData(e, isRefresh = false) {
+        if (!this.hasMore) return
         e && this.page++
         API.Goods.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
           this.page === 1 && (this.listData = [])
           this.listData = [...this.listData, ...res.data]
+          this.hasMore = res.meta.current_page < res.meta.last_page
           isRefresh&&uni.stopPullDownRefresh()
         })
       },
