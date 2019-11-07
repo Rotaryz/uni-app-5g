@@ -11,4 +11,9 @@ export default {
     const url = `/customer/content/module/show`
     return request.get({url, ...args})
   },
+  // ---- 商品列表 ---- keyword category_id limit page
+  getGoodsList(args) {
+    const url = `/customer/platform-goods/goods/index`
+    return request.get({ url, ...args })
+  }
 }

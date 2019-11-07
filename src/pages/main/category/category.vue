@@ -36,7 +36,7 @@
 
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
-  // import API from '@api'
+  import API from '../../../api'
   import categoryData from './category-data'
 
   const PAGE_NAME = 'CATEGORY'
@@ -65,11 +65,11 @@
     methods: {
       _getListData(e, isRefresh = false) {
         e && this.page++
-        setTimeout(()=>{
+        API.Good.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
           this.page === 1 && (this.listData = [])
-          this.listData = [...this.listData, ...categoryData.goodsData]
+          this.listData = [...this.listData, ...res.data]
           isRefresh&&uni.stopPullDownRefresh()
-        }, 1000)
+        })
       },
       tabTap(tabIndex) {
         // 相邻的才要动画

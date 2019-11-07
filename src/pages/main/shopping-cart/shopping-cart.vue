@@ -2,7 +2,7 @@
   <view class="shopping-cart">
     <view class="list-con">
       <view v-for="(item) in listData" :key="item.id" class="item">
-        <uni-swipe-action :options="options" @click="deleteGoods(item)">
+        <uni-swipe-action :options="options" @click="_deleteGoods(item)">
           <view class="item-con">
             <div class="item-left">
               <div v-if="item.saleable && item.status" :class="{checked: item.select}" class="item-checked"
@@ -28,11 +28,11 @@
                   <span class="bean-text">播豆</span>
                 </div>
                 <div class="counter">
-                  <div :class="['icon', 'minus',{disable:item.num<=1}]" @click="counterFun(item, -1)">
+                  <div :class="['icon', 'minus',{disable:item.num<=1}]" @click="_goodsCounter(item, -1)">
                     <span class="text"></span>
                   </div>
                   <input :value="item.num" type="number" class="input-inner">
-                  <div class="icon add" @click="counterFun(item, 1)"><span class="text"></span> <span
+                  <div class="icon add" @click="_goodsCounter(item, 1)"><span class="text"></span> <span
                           class="text"></span></div>
                 </div>
               </div>
@@ -62,6 +62,7 @@
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
   // import API from '@api'
+  import API from '../../../api'
   import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
   import shoppingData from './shopping-data'
 
@@ -111,23 +112,27 @@
       this._getListData()
     },
     methods: {
+      setListData(res) {
+        // 清除勾选计数
+        this.selectCount = 0
+        this.canSelectCount = 0
+        // 遍历数组，增加select字段作为勾选判断
+        this.listData = res.map(item => {
+          item.select = !!this.selectArr[item.id]
+          item.select && this.selectCount++
+          // 不是失效商品，可以勾选的数量+1
+          if (item.saleable && item.status) {
+            this.canSelectCount++
+          }
+          return item
+        })
+      },
       _getListData(isRefresh=false) {
-        setTimeout(()=>{
-          // 清除勾选计数
-          this.selectCount = 0
-          this.canSelectCount = 0
-          // 遍历数组，增加select字段作为勾选判断
-          this.listData = shoppingData.shoppingData.map(item => {
-            item.select = !!this.selectArr[item.id]
-            item.select && this.selectCount++
-            // 不是失效商品，可以勾选的数量+1
-            if (item.saleable && item.status) {
-              this.canSelectCount++
-            }
-            return item
-          })
+        API.Cart.getList({ data: { limit: 0, page: 1 } }).then(res => {
+          console.log(res.data.list)
+          this.setListData(res.data.list)
           isRefresh&&uni.stopPullDownRefresh()
-        },1000)
+        })
       },
       // 单个勾选商品
       checkedGoods(item) {
@@ -153,12 +158,18 @@
         this.selectCount = this.selectAll ? 0 : this.canSelectCount
       },
       // 计数器
-      counterFun(item, val) {
+      _goodsCounter(item, val) {
         if (item.num <= 1 && val < 0) return
         item.num = item.num + val
+        API.Cart.setGoodsNum({ data: { spec_id: item.spec_id, num: item.num }, loading: false }).then(res => {
+          this.setListData(res.data.list)
+        })
       },
       // 删除商品
-      deleteGoods(item) {
+      _deleteGoods(item) {
+        API.Cart.deleteGoods({ data: { ids: [item.id] }, loading: false }).then(res => {
+          this.setListData(res.data.list)
+        })
       },
       // 结算
       settlement() {}
