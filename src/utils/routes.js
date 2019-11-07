@@ -6,8 +6,8 @@ export default {
   main: {
     PACKAGE: MAIN,
     INDEX: `${MAIN}/index/index`,
-    MINE: `${MAIN}/mine`,
-    LOGIN:`${MAIN}/login`,
+    MINE: `${MAIN}/mine/mine`,
+    LOGIN: `${MAIN}/login/login`,
     // main
   }
 }
