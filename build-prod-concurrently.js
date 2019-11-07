@@ -1,5 +1,5 @@
-const concurrently = require('concurrently');
-let [a1 = ''] = process.argv.filter((itm, idx) => idx > 1);
+const concurrently = require('concurrently')
+let [a1 = ''] = process.argv.filter((itm, idx) => idx > 1)
 
 concurrently([
   `cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch ${a1}`,

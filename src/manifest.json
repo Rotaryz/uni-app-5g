@@ -49,10 +49,8 @@
     }
   },
   "quickapp": {
-    /* 快应用特有相关 */
   },
   "mp-weixin": {
-    /* 微信小程序特有相关 */
     "appid": "wxbebabb5eb8a0b7b3",
     "setting": {
       "urlCheck": false
@@ -60,6 +58,7 @@
     "usingComponents": true
   },
   "mp-alipay": {
+    "appid": "",
     "usingComponents": true
   },
   "mp-baidu": {
@@ -71,6 +70,7 @@
     "usingComponents": true
   },
   "mp-qq": {
+    "appid": "",
     "usingComponents": true
   }
 }
