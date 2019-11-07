@@ -16,13 +16,17 @@ class HTTP {
       // baseUrl: process.env.VUE_APP_API,
       header: {
         'Authorization': uni.getStorageSync('token'),
-        'Current-Shop': uni.getStorageSync('shopId') || '1',
-        'Mini-program':'swan'|| uni.getStorageSync('provider') || 'wx'
+        'Current-Shop': uni.getStorageSync('shopId'),
+        'Mini-program': PLATFORM
       }
     }
   }
 
   _formatRequest(args, {method}) {
+    let token = uni.getStorageSync('token')
+    let shopId = uni.getStorageSync('shopId')
+    if (token !== this.config.header['Authorization']) this.config.header['Authorization'] = token
+    if (shopId !== this.config.header['Current-Shop']) this.config.header['Current-Shop'] = shopId
     let {url, data} = args
     // 请求前处理
     if (typeof this.callback.beforeRequest === 'function') {
