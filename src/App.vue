@@ -12,14 +12,11 @@
         },
         onShow() {
         },
-        onHide: function () {
-            console.log('App Hide')
-        },
         methods:{
           async silenceLogin() {
             // 初始化获取静默授权
             let code = await getCode(this.$storage("provider"))
-            // this._login(code)
+            this._login(code)
           },
         }
     }
