@@ -1,16 +1,15 @@
 // PACKAGE_PATH
-const MAIN = '/pages'
+const MAIN = '/pages/main'
 
 /* eslint-disable */
 export default {
   main: {
     PACKAGE: MAIN,
-    INDEX: `${MAIN}/index`,
-    MINE: `${MAIN}/mine`,
-    LOGIN:`${MAIN}/login`,
-    SHOPPING_CART:`${MAIN}/shopping-cart`,
-    CATEGORY:`${MAIN}/category`,
-
+    INDEX: `${MAIN}/index/index`,
+    MINE: `${MAIN}/mine/mine`,
+    LOGIN: `${MAIN}/login/login`,
+    SHOPPING_CART: `${MAIN}/shopping-cart`,
+    CATEGORY: `${MAIN}/category`,
     // main
   }
 }
