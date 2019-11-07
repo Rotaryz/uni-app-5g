@@ -8,7 +8,7 @@ export default {
    * @returns {*}
    */
   demo(args) {
-    const url = `/customer/content/module/page`
+    const url = `/customer/content/module/index`
     return request.get({url, ...args})
   },
 }

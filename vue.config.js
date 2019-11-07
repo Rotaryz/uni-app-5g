@@ -1,7 +1,39 @@
 // const chalk = require('chalk')
 const webpack = require('webpack')
 const VERSION_NAME = 'version' // 版本
-// console.log(process.argv)
+
+let obj = {
+  version: JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
+  platform: process.env.VUE_APP_PLATFORM,
+  env: process.env.VUE_APP_ENV
+}
+console.log('环境配置', obj)
+
+// 第三方插件
+var definePlugin = new webpack.DefinePlugin({
+  'VERSION': JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
+  'PLATFORM': JSON.stringify(infoPlatform())
+})
+
+module.exports = {
+  css: {
+    loaderOptions: {
+      // 给 stylus-loader 传递选项
+      stylus: {
+        import: [
+          '~@/design/variable.styl',
+          '~@/design/mixin.styl'
+        ]
+      }
+    }
+  },
+  configureWebpack: { // 第三方插件配置
+    plugins: [
+      definePlugin
+    ]
+  }
+}
+
 // 处理自定义参数
 function infoVersion(arr, type) {
   let value = ''
@@ -24,33 +56,22 @@ function infoVersion(arr, type) {
   return value
 }
 
-let obj = {
-  version: JSON.stringify(infoVersion(process.argv, VERSION_NAME)),
-  platform: process.env.VUE_APP_PLATFORM,
-  env: process.env.VUE_APP_ENV
-}
-console.log('环境配置', obj)
-
-// 第三方插件
-var definePlugin = new webpack.DefinePlugin({
-  'VERSION': JSON.stringify(infoVersion(process.argv, VERSION_NAME))
-})
-
-module.exports = {
-  css: {
-    loaderOptions: {
-      // 给 stylus-loader 传递选项
-      stylus: {
-        import: [
-          '~@/design/variable.styl',
-          '~@/design/mixin.styl'
-        ]
-      }
-    }
-  },
-  configureWebpack: { // 第三方插件配置
-    plugins: [
-      definePlugin
-    ]
+// 映射平台数据
+function infoPlatform() {
+//    platform: process.env.VUE_APP_PLATFORM,
+  let value = process.env.VUE_APP_PLATFORM
+  switch (process.env.VUE_APP_PLATFORM) {
+    case 'mp-weixin':
+      value = 'wx'
+      break
+    case 'mp-baidu':
+      value = 'swan'
+      break
+    case 'mp-toutiao':
+      value = 'tt'
+      break
+    default:
+      break
   }
+  return value
 }
