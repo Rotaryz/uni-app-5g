@@ -1,9 +1,9 @@
 ---
 to: "src/pages.json"
 inject: true
-before: <%= package[0]==='main'?'':package[1]  %>
+after: <%= package[0]==='main'?'subPackages':package[1]  %>
 
 ---
 <%_ if (package[0]==='main') { _%>
     '',<%_} else { _%>
-        "<%= name _%>",<%_ } _%>
+        "<%= name _%>/<%= name _%>",<%_ } _%>

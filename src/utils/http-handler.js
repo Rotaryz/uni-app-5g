@@ -43,6 +43,7 @@ HTTP.setCallback({
       // 错误回调处理 async/await必须传doctor错误处理方法，可以为空方法
       if (typeof doctor === 'function') {
         doctor(res, url)
+        return doctor
       } else {
         return res
       }
