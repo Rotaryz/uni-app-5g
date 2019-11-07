@@ -75,8 +75,6 @@
   "tabBar": {
     "color": "#979BA5",
     "selectedColor": "#19B6B4",
-    "fontSize": "10px",
-    "iconWidth": "27px",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
     "list": [
