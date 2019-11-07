@@ -5,6 +5,7 @@
   "scripts": {
     "local": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service --mode local uni-build --watch",
     "dev": "node build-concurrently.js",
+    "serve": "node build-serve-concurrently.js",
     "dev:app-plus": "cross-env NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch",
     "dev:custom": "cross-env NODE_ENV=development uniapp-cli custom",
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",
