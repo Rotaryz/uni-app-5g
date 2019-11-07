@@ -139,7 +139,7 @@
       // 重新支付
       orderRepay(id) {
         let that = this
-        API.Order.orderRepay({ data: { order_id: id } })
+        this.$API.Mine.orderRepay({ data: { order_id: id } })
           .then((res) => {
             let payRes = res.data.pay_config
             UNI.payWayFor(payRes).then(() => {
