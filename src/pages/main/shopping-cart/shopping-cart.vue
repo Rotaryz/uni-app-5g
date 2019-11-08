@@ -198,7 +198,7 @@
           list: subList,
           type: 'shopping_cart'
         })
-        // uni.navigateTo({ url: this.$routes.main.SUBMIT_ORDER })
+        uni.navigateTo({ url: this.$routes.main.SUBMIT_ORDER })
       }
     }
   }

@@ -23,7 +23,9 @@
       }
     },
     methods: {
-      goToBuy(goods) {}
+      goToBuy(goods) {
+        uni.navigateTo({ url: this.$routes.main.GOODS_DETAIL + `?id=${goods.id}` })
+      }
     }
   }
 </script>
