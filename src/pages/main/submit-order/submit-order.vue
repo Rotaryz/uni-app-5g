@@ -178,11 +178,11 @@
       },
       // 去新增地址
       goAddAddress() {
-        unit.navigateTo({ url: this.$routes.personal.NEW_ADDRESS })
+        unit.navigateTo({ url: this.$routes.main.NEW_ADDRESS })
       },
       // 去地址页面选择地址
       goMyAddress() {
-        unit.navigateTo({ url: this.$routes.personal.MY_ADDRESS + '?save=1' })
+        unit.navigateTo({ url: this.$routes.main.MY_ADDRESS + '?save=1' })
       },
       // 确认支付下单
       submitBtn() {
