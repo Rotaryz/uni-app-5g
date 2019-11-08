@@ -186,7 +186,7 @@
       },
       // 兑换详情
       goExchangeDetail(item) {
-        uni.navigateTo({url: `${this.$routes.main.GOODS_DETAIL_EXCHANGE}?id=${item.id}`})
+        // uni.navigateTo({url: `${this.$routes.main.GOODS_DETAIL_EXCHANGE}?id=${item.id}`})
       },
       // 播豆商品详情
       goGoodsDetail(item) {
@@ -194,16 +194,16 @@
       },
       // 兑换列表
       goExchange() {
-        let res = this.cmsList.find(item => item.code === "exchange_area")
-        if (res.goods_num < 6) return
-        wx.navigateTo({url: this.$routes.main.GOODS_EXCHANGE})
+        // let res = this.cmsList.find(item => item.code === "exchange_area")
+        // if (res.goods_num < 6) return
+        // uni.navigateTo({url: this.$routes.main.GOODS_EXCHANGE})
         //  跳转兑换列表
       },
       // 播豆商品列表
       goGoodsList() {
         let res = this.cmsList.find(item => item.code === "bean_area")
         if (res.goods_num < 6) return
-        wx.navigateTo({url: this.$routes.main.GOODS_CLASSIFY})
+        uni.navigateTo({url: this.$routes.main.CATEGORY})
         //  跳转商品分类列表
       },
 
@@ -271,7 +271,7 @@
             .exchange-banner
                 width: 100%
                 display: block
-                height: 80px
+                height: 160rpx
                 border-radius: 6px 6px 0 0
 
     .ex-content
