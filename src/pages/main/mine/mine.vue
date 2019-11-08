@@ -6,8 +6,8 @@
     <div class="mine-info">
       <div class="info-main-box">
         <div class="info-main-top">
-          <img class="user-img" mode="aspectFill" :src="!isLogin ? userInfo.avatar : defaultImg">
-          <div v-if="!isLogin" class="user-name">{{userInfo.nickname}}</div>
+          <img class="user-img" mode="aspectFill" :src="!isLogin ? myUserInfo.avatar : defaultImg">
+          <div v-if="!isLogin" class="user-name">{{myUserInfo.nickname}}</div>
           <div v-else class="login-in" @tap="login">登录/注册<img src="./icon-pressed@2x.png" class="way"></div>
         </div>
         <div class="info-main-bottom">
@@ -82,7 +82,7 @@
       return {
         backgroundHeight: '',
         placeHeight: '',
-        userInfo: {},
+        myUserInfo: {},
         defaultImg: require('./pic-head@2x.png'),
         orderNav: ORDER_NAV,
         serviceNav: SERVICE_NAV,
@@ -94,8 +94,6 @@
         isAd: false
       }
     },
-    computed: {
-    },
     onLoad() {
       let res = uni.getSystemInfoSync()
       this.statusBarHeight = res.statusBarHeight || 20
@@ -103,24 +101,23 @@
       this.backgroundHeight = 0.217 * res.screenWidth + this.placeHeight
     },
     onShow() {
-      console.log(uni.getStorageSync('userInfo'), 'www')
       this.isLogin = !uni.getStorageSync('token')
-      this.userInfo = uni.getStorageSync('userInfo')
+      this.myUserInfo = uni.getStorageSync('userInfo')
       if (this.isLogin) return
       this._getUserInfo()
       this._getIntegralBeanCount()
     },
     methods: {
       login() {
-        Storage('errorUrl', 'pages/mine')
-        wx.navigateTo({ url: this.$routes.main.LOGIN })
+        uni.setStorageSync('errorUrl', 'pages/mine')
+        uni.navigateTo({ url: this.$routes.main.LOGIN })
       },
       _getUserInfo() {
         this.$API.Mine.getUserInfo({ data: {}, loading: false, toast: false })
           .then((res) => {
             let userInfo = uni.getStorageSync('userInfo') || {}
-            this.userInfo = Object.assign({}, userInfo, res.data)
-            uni.setStorageSync('userInfo', this.userInfo)
+            this.myUserInfo = Object.assign({}, userInfo, res.data)
+            uni.setStorageSync('userInfo', this.myUserInfo)
           })
           .catch(() => {
           })

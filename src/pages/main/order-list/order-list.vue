@@ -2,12 +2,12 @@
   <div class="order-list">
     <div class="scroll-box">
       <scroll-view
-              class="scroll-view2"
-              v-if="navList.length"
-              id="scrollView"
-              :scroll-into-view="viewToItem"
-              scroll-x
-              scroll-with-animation="true"
+        class="scroll-view2"
+        v-if="navList.length"
+        id="scrollView"
+        :scroll-into-view="viewToItem"
+        scroll-x
+        scroll-with-animation="true"
       >
         <div v-for="(item, index) in navList" :class="tabIndex === index ? 'item-active'  : ''" :key="index"
              class="item scroll-item" :id="'item'+index" @tap="_changeTab(index, item.status, $event)">
@@ -24,9 +24,9 @@
            :style="{'transform': ' translateX('+ -(tabIndex * 100) +'vw)', width:  width +'vw'}"
       >
         <div
-                v-for="(tabItem, tabInx) in orderList" :key="tabInx"
-                :style="{height: tabIndex * 1 === tabInx ? -1 : scrollHeight + 'px'}"
-                class="goods-list-box"
+          v-for="(tabItem, tabInx) in orderList" :key="tabInx"
+          :style="{height: tabIndex * 1 === tabInx ? -1 : scrollHeight + 'px'}"
+          class="goods-list-box"
         >
           <div v-for="(item, index) in tabItem.arr" :key="index" class="order-item" @tap="goOrderDetail(item.id)">
             <div class="order-header">
@@ -57,7 +57,7 @@
               <div v-if="item.status === 0" class="order-btn confirm" @tap.stop="orderRepay(item.id, index)">立即支付</div>
             </div>
           </div>
-          <!--<empty v-if="tabItem.isEmpty" :image="empty" :paddingTop="45.4" tip="你的订单是空的"></empty>-->
+          <empty v-if="tabItem.isEmpty" :image="empty" :paddingTop="45.4" tip="你的订单是空的"></empty>
         </div>
       </div>
     </div>
@@ -68,21 +68,27 @@
   // import * as Helpers from './helpers'
   // import API from '@api'
   import * as UNI from '@/utils/uni-app.js'
+  import empty from '../../../components/empty/empty'
 
   const PAGE_NAME = 'ORDER_LIST'
   const NAV_LIST = [
-    { name: '全部', status: '' },
-    { name: '待付款', status: '0' },
-    { name: '待发货', status: '10' },
-    { name: '待收货', status: '20' },
-    { name: '已完成', status: '100' }
+    {name: '全部', status: ''},
+    {name: '待付款', status: '0'},
+    {name: '待发货', status: '10'},
+    {name: '待收货', status: '20'},
+    {name: '已完成', status: '100'}
   ]
-  const ARR = { arr: [], classifyMore: false, isEmpty: false, lastPage: 2, page: 1, height: 145 }
+  const ARR = {arr: [], classifyMore: false, isEmpty: false, lastPage: 2, page: 1, height: 145}
+  const EMPTY = require('../../../static/images/pic-order@2x.png')
 
   export default {
     name: PAGE_NAME,
+    components: {
+      empty
+    },
     data() {
       return {
+        empty: EMPTY,
         navList: NAV_LIST,
         viewToItem: 'item0',
         boxTransition: 'all .3s',
@@ -125,7 +131,7 @@
     },
     methods: {
       goOrderDetail(id) {
-        wx.navigateTo({ url: `${this.$routes.main.ORDER_DETAIL}?id=${id}` })
+        wx.navigateTo({url: `${this.$routes.main.ORDER_DETAIL}?id=${id}`})
       },
       _changeTab(index, id, e) {
         if (this.tabIndex === index) return
@@ -148,7 +154,7 @@
         this.viewToItem = `item${number}`
       },
       getOrderList() {
-        let data = { status: this.navList[this.tabIndex].status, page: this.orderList[this.tabIndex].page }
+        let data = {status: this.navList[this.tabIndex].status, page: this.orderList[this.tabIndex].page}
         console.log(data)
         this.$API.Mine.getOrderList({data: data})
           .then((res) => {
@@ -170,7 +176,7 @@
       },
       // 重新支付
       orderRepay(id, index) {
-        this.$API.Mine.orderRepay({ data: { order_id: id } })
+        this.$API.Mine.orderRepay({data: {order_id: id}})
           .then((res) => {
             let payRes = res.data.pay_config
             UNI.payWayFor(payRes).then(() => {
@@ -189,7 +195,7 @@
       },
       // 取消订单
       cancelOrder(id, index) {
-        this.$API.Mine.cancelOrder({ data: { id: id } })
+        this.$API.Mine.cancelOrder({data: {id: id}})
           .then((res) => {
             if (this.tabIndex === 0) {
               // 全部列表的时候修改状态
@@ -211,6 +217,7 @@
 
   .nav-block
     height: 40px
+
   .order-list
     width: 100%
 
@@ -243,8 +250,8 @@
         height: 100%
         transform-origin: 50%
         transition: all 0.2s
-        width: 43px
-        padding: 0 18px
+        width: 79px
+        /*padding: 0 18px*/
         box-sizing: content-box
         .text
           line-height: 1
