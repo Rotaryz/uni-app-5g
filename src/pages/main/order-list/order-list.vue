@@ -57,7 +57,7 @@
               <div v-if="item.status === 0" class="order-btn confirm" @tap.stop="orderRepay(item.id, index)">立即支付</div>
             </div>
           </div>
-          <!--<empty v-if="tabItem.isEmpty" :image="empty" :paddingTop="45.4" tip="你的订单是空的"></empty>-->
+          <empty v-if="tabItem.isEmpty" :image="empty" :paddingTop="45.4" tip="你的订单是空的"></empty>
         </div>
       </div>
     </div>
@@ -68,6 +68,7 @@
   // import * as Helpers from './helpers'
   // import API from '@api'
   import * as UNI from '@/utils/uni-app.js'
+  import empty from '../../../components/empty/empty'
 
   const PAGE_NAME = 'ORDER_LIST'
   const NAV_LIST = [
@@ -78,11 +79,16 @@
     {name: '已完成', status: '100'}
   ]
   const ARR = {arr: [], classifyMore: false, isEmpty: false, lastPage: 2, page: 1, height: 145}
+  const EMPTY = require('../../../static/images/pic-order@2x.png')
 
   export default {
     name: PAGE_NAME,
+    components: {
+      empty
+    },
     data() {
       return {
+        empty: EMPTY,
         navList: NAV_LIST,
         viewToItem: 'item0',
         boxTransition: 'all .3s',
