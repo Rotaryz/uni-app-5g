@@ -250,8 +250,8 @@
         height: 100%
         transform-origin: 50%
         transition: all 0.2s
-        width: 43px
-        padding: 0 18px
+        width: 79px
+        /*padding: 0 18px*/
         box-sizing: content-box
         .text
           line-height: 1
