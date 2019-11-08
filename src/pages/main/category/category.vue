@@ -10,7 +10,7 @@
     </scroll-view>
     <swiper :current="tabIndex" class="swiper-box" :duration="durationTime" @change="changeTab">
       <swiper-item v-for="(tabItem,tabIndex) in categoryTab" :key="tabIndex">
-        <scroll-view :scroll-top="scrollTop" lower-threshold="200" class="list-scroll-content" scroll-y @scrolltolower="_getListData">
+        <scroll-view :scroll-top="scrollTop" lower-threshold="300" class="list-scroll-content" scroll-y @scrolltolower="_getListData">
           <div class="list-content">
             <div v-for="(item, idx) in listData" :key="idx" class="item-con">
               <goods-item :goods="item"></goods-item>
@@ -26,6 +26,7 @@
   // import * as Helpers from './helpers'
   import API from '../../../api'
   import goodsItem from './goods-item'
+  import categoryData from './category-data'
 
   const PAGE_NAME = 'CATEGORY'
   const CATEGORY = [
@@ -59,7 +60,6 @@
       }
     },
     onLoad() {
-      console.log('category onLoad')
       this._getListData()
     },
     onPullDownRefresh() {
@@ -77,16 +77,17 @@
         this.onLoading = true
         e && this.page++
         API.Goods.getGoodsList({ data: {keyword: '', limit: 10, page: this.page} }).then(res => {
-          if (this.page === 1) this.listData = []
+          // if (this.page === 1) this.listData = []
           // if ([0, 2, 5].includes(this.tabIndex)) this.listData = [...this.listData, ...res.data]
+          // console.log(JSON.stringify(res.data))
           if (this.page === 1) {
             this.listData = res.data
-            this.testData = res.data
+            // this.testData = res.data
           } else {
-            this.listData = [...this.listData, ...this.testData]
-            this.categoryTab[0].name = this.page * this.testData.length
+            this.listData = [...this.listData, ...categoryData.categoryData]
+            this.categoryTab[0].name = this.page * categoryData.categoryData.length
           }
-          this.hasMore = res.meta.current_page < res.meta.last_page
+          // this.hasMore = res.meta.current_page < res.meta.last_page
           isRefresh&&uni.stopPullDownRefresh()
         })
       },
