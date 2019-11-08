@@ -10,9 +10,7 @@ let env = 'development' // 不传参数默认为dev环境
 let version = '' // 不传参数默认为无版本
 let cmd = '' // 运行命令
 let platform = ['mp-weixin', 'mp-toutiao', 'mp-baidu', 'h5'] // 默认打包平台参数
-let concurrentlyArr = platform.map((child) => { // 打包命令，默认打包四个平台
-  return `cross-env NODE_ENV=${env} UNI_PLATFORM=${child} vue-cli-service ${cmd} uni-build --watch ${version}`
-})
+let concurrentlyArr = []
 
 arr.forEach((item) => {
   // 环境
@@ -43,6 +41,10 @@ arr.forEach((item) => {
   // 平台
   if (item.includes('--mp')) {
     concurrentlyArr = [`cross-env NODE_ENV=${env} UNI_PLATFORM=${item.slice(2)} vue-cli-service ${cmd} uni-build --watch ${version}`]
+  } else {
+    concurrentlyArr = platform.map((child) => { // 打包命令，默认打包四个平台
+      return `cross-env NODE_ENV=${env} UNI_PLATFORM=${child} vue-cli-service ${cmd} uni-build --watch ${version}`
+    })
   }
 })
 
