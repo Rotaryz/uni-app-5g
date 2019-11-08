@@ -20,18 +20,18 @@ const AppPlugin = {
 // 使用插件
 Vue.use(AppPlugin)
 // 捕捉网络变化
-wx.onNetworkStatusChange(function (res) {
-  console.log(res)
-  getApp().globalData.isConnected = res.isConnected
-  if (!res.isConnected) {
-    const options = wx.getLaunchOptionsSync()
-    if (options.path === routes.main.ERROR) {
-      return
-    }
-    wx.redirectTo({url: routes.main.ERROR})
-  }
-  console.error(res.isConnected, typeof res.isConnected, '是否有网络连接')
-})
-wx.onMemoryWarning(function (res) {
-  console.warn('onMemoryWarningReceive', res)
-})
+// uni.onNetworkStatusChange(function (res) {
+//   console.log(res)
+  // getApp().globalData.isConnected = res.isConnected
+  // if (!res.isConnected) {
+  //   const options =uni.getLaunchOptionsSync()
+  //   if (options.path === routes.main.ERROR) {
+  //     return
+  //   }
+    // uni.redirectTo({url: routes.main.ERROR})
+  // }
+  // console.error(res.isConnected, typeof res.isConnected, '是否有网络连接')
+// })
+// wx.onMemoryWarning(function (res) {
+//   console.warn('onMemoryWarningReceive', res)
+// })

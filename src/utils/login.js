@@ -61,6 +61,7 @@ const getSetting = () => {
     const promise = new Promise((resolve, reject) => {
         uni.getSetting({
             success(res) {
+              console.log(res,'res')
                 let authSetting = res.authSetting
                 //授权成功
                 if (authSetting['scope.userInfo']) {
@@ -85,7 +86,7 @@ const getSetting = () => {
             icon: 'none',
             title: res.errMsg || '获取授权状态失败',
             duration: 2000
-        });
+        })
     })
 
     return promise
