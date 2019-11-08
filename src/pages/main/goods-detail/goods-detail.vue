@@ -1,5 +1,6 @@
 <template>
   <div class="goods-detail">
+    <skeleton-screen :visible="!detail.id" :isHasHead="true"></skeleton-screen>
     <template v-show="detail.id">
       <!--banner图-->
       <div class="banner-box">
@@ -142,6 +143,7 @@
 <script type="text/ecmascript-6">
   import API from '@/api'
   import CountOperate from '@/components/count-operate/count-operate'
+  import SkeletonScreen from '@/components/skeleton-screen/skeleton-screen'
   import AppPromise from '@/utils/app-promise'
   import { resolveQueryScene } from '@/utils/common'
   import { cartMethods, cartComputed } from '@/store/helpers'
@@ -151,7 +153,8 @@
   export default {
     name: PAGE_NAME,
     components: {
-      CountOperate
+      CountOperate,
+      SkeletonScreen
     },
     data() {
       return {
