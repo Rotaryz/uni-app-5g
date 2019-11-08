@@ -109,7 +109,7 @@
     },
     methods: {
       login() {
-        Storage('errorUrl', 'pages/mine')
+        uni.setStorageSync('errorUrl', 'pages/mine')
         uni.navigateTo({ url: this.$routes.main.LOGIN })
       },
       _getUserInfo() {
