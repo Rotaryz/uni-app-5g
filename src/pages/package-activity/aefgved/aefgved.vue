@@ -1,24 +1,27 @@
 <template>
-  <div class="fr">
-    fr
+  <div class="aefgved">
+    aefgved
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-// 组件模板
-  const COMPONENT_NAME = 'demo'
+  // import * as Helpers from './helpers'
+  // import API from '@api'
+
+  const PAGE_NAME = 'AEFGVED'
 
   export default {
-    name: COMPONENT_NAME,
+    name: PAGE_NAME,
     data() {
       return {
-
       }
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .demo
+  /*@import "~@design"*/
+
+  .aefgved
     width: 100%
 </style>

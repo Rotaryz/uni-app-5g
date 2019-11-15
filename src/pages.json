@@ -86,6 +86,24 @@
             "navigationBarTitleText": "的人"
           }
         },
+      {
+        "path": "teat-3/teat-3",
+        "style": {
+           "navigationBarTitleText": "sfa"
+        }
+      },
+      {
+        "path": "fr/fr",
+        "style": {
+           "navigationBarTitleText": "qfrqr"
+        }
+      },
+      {
+        "path": "aefgved/aefgved",
+        "style": {
+           "navigationBarTitleText": "edfgedgtqa"
+        }
+      },
         "activity_todo"
       ]
     }

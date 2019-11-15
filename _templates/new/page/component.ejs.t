@@ -1,6 +1,9 @@
+---
+to: "src/pages/<%= h.inflection.dasherize(package[0]) %>/<%= h.inflection.dasherize(name) %>/demo/demo.vue"
+---
 <template>
-  <div class="fr">
-    fr
+  <div class="<%= h.inflection.dasherize(name) %>">
+    <%= h.inflection.dasherize(name) %>
   </div>
 </template>
 

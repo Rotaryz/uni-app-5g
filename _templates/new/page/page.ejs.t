@@ -9,7 +9,8 @@ to: "src/pages/<%= h.inflection.dasherize(package[0]) %>/<%= h.inflection.dasher
 
 <script type="text/ecmascript-6">
   // import * as Helpers from './helpers'
-  // import API from '@api'
+  // import API from '@/api'
+  // import Demo from './demo/demo'
 
   const PAGE_NAME = '<%=  h.inflection.dasherize(name).toUpperCase().replace(/-/g, '_')%>'
 

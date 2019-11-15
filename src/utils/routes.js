@@ -10,6 +10,9 @@ export default {
     DEMO: `${ACTIVITY}/demo/demo`,
     TEST: `${ACTIVITY}/test/test`,
     TEST2: `${ACTIVITY}/test2/test2`,
+    TEAT_3:`${ACTIVITY}/teat-3/teat-3`,
+    FR:`${ACTIVITY}/fr/fr`,
+    AEFGVED:`${ACTIVITY}/aefgved/aefgved`,
     // package-activity
   },
   main: {

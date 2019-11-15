@@ -21,8 +21,6 @@ to: "src/components/<%= (h.inflection.dasherize(name).toLowerCase().slice(0, 5) 
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "~@design"
-
   .<%= h.inflection.dasherize(name) %>
     width: 100%
 </style>

@@ -13,8 +13,7 @@
   export default {
     name: PAGE_NAME,
     data() {
-      return {
-      }
+      return {}
     }
   }
 </script>
@@ -23,5 +22,5 @@
   /*@import "~@design"*/
 
   .list
-    width: 100%
+    width: 100rpx
 </style>

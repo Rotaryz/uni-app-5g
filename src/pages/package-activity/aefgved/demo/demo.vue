@@ -1,6 +1,6 @@
 <template>
-  <div class="fr">
-    fr
+  <div class="aefgved">
+    aefgved
   </div>
 </template>
 

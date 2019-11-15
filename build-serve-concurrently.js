@@ -5,47 +5,33 @@
 const concurrently = require('concurrently')
 let arr = process.argv.filter((itm, idx) => idx > 1)
 
-const ENV = ['--dev', '--release', '--prod', '--local']
 let env = 'development' // 不传参数默认为dev环境
-let version = '' // 不传参数默认为无版本
 let cmd = '' // 运行命令
 let platform = ['mp-weixin', 'mp-toutiao', 'mp-baidu', 'h5'] // 默认打包平台参数
 let concurrentlyArr = []
+let str = arr.join(' ')
 
 arr.forEach((item) => {
-  // 环境
-  if (ENV.includes(item)) {
-    switch (item) {
-      case '--dev':
-        env = 'development'
-        break
-      case '--release':
-        env = 'development'
-        cmd = '--mode release'
-        break
-      case '--local':
-        env = 'development'
-        cmd = '--mode local'
-        break
-      case '--prod':
-        env = 'production'
-        break
-      default :
-        // 不传参数默认为dev环境
-        env = 'development'
-        break
-    }
-  }
-  // 版本
-  if (item.includes('--v')) version = item
-  // 平台
-  if (item.includes('--mp')) {
-    concurrentlyArr = [`cross-env NODE_ENV=${env} UNI_PLATFORM=${item.slice(2)} vue-cli-service ${cmd} uni-build --watch ${version}`]
-  } else {
-    concurrentlyArr = platform.map((child) => { // 打包命令，默认打包四个平台
-      return `cross-env NODE_ENV=${env} UNI_PLATFORM=${child} vue-cli-service ${cmd} uni-build --watch ${version}`
-    })
+  item = item.slice(2)
+  let platArr = item.split('=')
+  switch (platArr[0]) {
+    // 处理环境命令
+    case 'env':
+      cmd = !platArr[1].includes('dev') && !platArr[1].includes('prod') ? cmd = `mode ${platArr[1]}` : ''
+      env = platArr[1].includes('prod') ? 'production' : 'development'
+      break
+    // 平台配置命令
+    case 'platform':
+      let value = platArr[1].split(',')
+      concurrentlyArr = value.map((child) => {
+        return `cross-env NODE_ENV=${env} UNI_PLATFORM=${child} vue-cli-service ${cmd} uni-build --watch ${str}`
+      })
+    default:
+      break
   }
 })
+concurrentlyArr = !concurrentlyArr.length ? platform.map((child) => { // 打包命令，默认打包四个平台
+  return `cross-env NODE_ENV=${env} UNI_PLATFORM=${child} vue-cli-service ${cmd} uni-build --watch ${str}`
+}) : concurrentlyArr
 
 concurrently(concurrentlyArr)
