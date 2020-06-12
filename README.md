@@ -7,7 +7,8 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run serve(默认运行编译dev环境无版本的微信小程序)
+npm run serve --
 ```
 
 ### Compiles and minifies for production

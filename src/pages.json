@@ -1,3 +1,4 @@
+
 {
   "pages": [
     {
@@ -8,105 +9,13 @@
     },
     "todo",
     {
-      "path": "pages/main/order-detail/order-detail",
-      "style": {
-        "navigationBarTitleText": "订单详情"
-      }
-    },
-    {
-      "path": "pages/main/order-list/order-list",
-      "style": {
-        "navigationBarTitleText": "订单列表"
-      }
-    },
-    {
-      "path": "pages/main/goods-detail/goods-detail",
-      "style": {
-        "navigationBarTitleText": "商品详情"
-      }
-    },
-    {
-      "path": "pages/main/submit-order/submit-order",
-      "style": {
-        "navigationBarTitleText": "提交订单"
-      }
-    },
-    {
-      "path": "pages/main/category/category",
-      "style": {
-        "navigationBarTitleText": "分类",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/main/shopping-cart/shopping-cart",
-      "style": {
-        "navigationBarTitleText": "购物车",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
       "path": "pages/main/mine/mine",
       "style": {
-        "navigationBarTitleText": "个人中心"
-      }
-    },
-    {
-      "path": "pages/main/login/login",
-      "style": {
-        "navigationBarTitleText": "登录"
+        "navigationBarTitleText": "我的"
       }
     }
   ],
   "subPackages": [
-    {
-      "root": "pages/package-activity/",
-      "pages": [
-        {
-          "path": "list/list",
-          "style": {
-            "navigationBarTitleText": "列表"
-          }
-        },
-        {
-          "path": "demo/demo",
-          "style": {
-            "navigationBarTitleText": "研发模板"
-          }
-        },
-        {
-          "path": "test/test",
-          "style": {
-            "navigationBarTitleText": "测试"
-          }
-        },
-        {
-          "path": "test2/test2",
-          "style": {
-            "navigationBarTitleText": "的人"
-          }
-        },
-      {
-        "path": "teat-3/teat-3",
-        "style": {
-           "navigationBarTitleText": "sfa"
-        }
-      },
-      {
-        "path": "fr/fr",
-        "style": {
-           "navigationBarTitleText": "qfrqr"
-        }
-      },
-      {
-        "path": "aefgved/aefgved",
-        "style": {
-           "navigationBarTitleText": "edfgedgtqa"
-        }
-      },
-        "activity_todo"
-      ]
-    }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

@@ -9,5 +9,3 @@ const app = new Vue({
   ...App
 })
 app.$mount()
-console.warn(process.env.VUE_APP_ENV, VERSION)
-console.log(VERSION, 'dfsdf')

@@ -11,7 +11,6 @@ const AppPlugin = {
     Vue.mixin(base)
     Vue.prototype.$API = API
     Vue.prototype.$ERR_OK = ERR_OK
-    Vue.prototype.$imageUrl = process.env.VUE_APP_IMAGE
     Vue.prototype.$store = store
     Vue.prototype.$routes = routes
     Vue.prototype.$uniapp = $uniapp
@@ -22,15 +21,15 @@ Vue.use(AppPlugin)
 // 捕捉网络变化
 // uni.onNetworkStatusChange(function (res) {
 //   console.log(res)
-  // getApp().globalData.isConnected = res.isConnected
-  // if (!res.isConnected) {
-  //   const options =uni.getLaunchOptionsSync()
-  //   if (options.path === routes.main.ERROR) {
-  //     return
-  //   }
-    // uni.redirectTo({url: routes.main.ERROR})
-  // }
-  // console.error(res.isConnected, typeof res.isConnected, '是否有网络连接')
+// getApp().globalData.isConnected = res.isConnected
+// if (!res.isConnected) {
+//   const options =uni.getLaunchOptionsSync()
+//   if (options.path === routes.main.ERROR) {
+//     return
+//   }
+// uni.redirectTo({url: routes.main.ERROR})
+// }
+// console.error(res.isConnected, typeof res.isConnected, '是否有网络连接')
 // })
 // wx.onMemoryWarning(function (res) {
 //   console.warn('onMemoryWarningReceive', res)

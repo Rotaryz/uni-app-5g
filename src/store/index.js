@@ -44,5 +44,4 @@ function getNamespace(subtree, path) {
   }
   return getNamespace(subtree.modules[namespace], path)
 }
-console.log(root.modules)
 export default root.modules

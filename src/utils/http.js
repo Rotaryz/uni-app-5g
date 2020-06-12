@@ -14,18 +14,14 @@ class HTTP {
     this.config = {
       // baseUrl: process.env.VUE_APP_API,
       header: {
-        'Authorization': uni.getStorageSync('token'),
-        'Current-Shop': uni.getStorageSync('shopId'),
-        'Mini-program': PLATFORM
+        'Authorization': uni.getStorageSync('token') || ''
       }
     }
   }
 
   _formatRequest(args, {method}) {
     let token = uni.getStorageSync('token')
-    let shopId = uni.getStorageSync('shopId')
     if (token !== this.config.header['Authorization']) this.config.header['Authorization'] = token
-    if (shopId !== this.config.header['Current-Shop']) this.config.header['Current-Shop'] = shopId
     let {url, data} = args
     // 请求前处理
     if (typeof this.callback.beforeRequest === 'function') {
@@ -41,7 +37,7 @@ class HTTP {
         success(res) {
           res = checkStatus(res)
           // 监测请求返回的http状态
-          if (res.status && res.status === ERR_NO) {
+          if (res.code && res.code === ERR_NO) {
             hideLoading()
             showToast(res.message)
             console.error(url + ' <<<<<<接口请求失败>>>>> 异常提示：' + JSON.stringify(res.message))
@@ -49,7 +45,7 @@ class HTTP {
           }
           let result = that.callback.responseFulfilled(res, args)
           // 请求完成后的逻辑处理
-          if (typeof result === 'function' || result.error_code === ERR_OK) {
+          if (typeof result === 'function' || result.code === ERR_OK) {
             resolve(res)
           } else {
             reject(res)
@@ -105,8 +101,8 @@ function checkStatus(response) {
   }
   // 异常状态下，把错误信息返回去
   return {
-    status: ERR_NO,
-    message: '网络开小差'
+    status: response ? response.statusCode : ERR_NO,
+    message: response && response.message ? response.message : '接口异常'
   }
 }
 
